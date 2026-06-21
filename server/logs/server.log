@@ -1,0 +1,4 @@
+[db] Target database: chronos_moments
+[db] Connected: chronos_moments
+[server] Chronos Moments API running on http://localhost:5000
+[auth] Password reset OTP for +88001317894732: 202251 (expires in 10 min)

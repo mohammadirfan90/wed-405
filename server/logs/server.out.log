@@ -1,0 +1,3 @@
+[db] Target database: chronos_moments
+[db] Connected: chronos_moments
+[server] Chronos Moments API running on http://localhost:5000

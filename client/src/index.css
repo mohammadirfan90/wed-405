@@ -1,0 +1,47 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html, body, #root { height: 100%; }
+  body {
+    @apply font-sans text-ink antialiased;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex w-full items-center justify-center rounded-lg bg-brand px-4 py-3
+           font-semibold text-white shadow-soft transition
+           hover:bg-brand-600 active:scale-[0.99]
+           focus:outline-none focus:ring-2 focus:ring-brand/60 focus:ring-offset-2 focus:ring-offset-lav-100
+           disabled:opacity-60 disabled:cursor-not-allowed;
+  }
+  .input-field {
+    @apply w-full rounded-lg border border-lav-300 bg-white/80 px-3 py-3 text-ink
+           placeholder:text-ink-muted/70
+           focus:border-brand focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand/40;
+  }
+  .label {
+    @apply mb-1 block text-sm font-semibold text-ink;
+  }
+
+  /* Luxury Theme Extensions */
+  .font-serif-luxury {
+    font-family: 'Playfair Display', Georgia, serif;
+  }
+
+  .gold-text-gradient {
+    background: linear-gradient(135deg, #BF953F 0%, #FCF6BA 25%, #B38728 50%, #FBF5B7 75%, #AA771C 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .gold-bg-gradient {
+    background: linear-gradient(135deg, #BF953F 0%, #FCF6BA 25%, #B38728 50%, #FBF5B7 75%, #AA771C 100%);
+  }
+
+  .gold-border-gradient {
+    border-image: linear-gradient(135deg, #BF953F 0%, #FCF6BA 25%, #B38728 50%, #FBF5B7 75%, #AA771C 100%) 1;
+  }
+}

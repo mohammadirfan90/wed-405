@@ -1,0 +1,54 @@
+# Changelog
+
+## 0.12.0
+- Add `/linear-stale-check` command to review open Linear issues and report likely active, uncertain, or obsolete work
+- Document `/linear-stale-check` usage in the README
+
+## 0.11.0
+- Rely on OpenCode's native skill discovery via `config.skills.paths` instead of the plugin's custom `skill` tool and XML injection path
+- Add bundled OpenSpec commands and skills under `.opencode/`
+- Add `openspec/config.yaml` for OpenSpec configuration
+
+## 0.10.2
+- Fix skill discovery paths to use plural `.opencode/skills` and `.config/opencode/skills` (matching OpenCode convention)
+- Replace `process.cwd()` with explicit `cwd` parameter sourced from `ctx.directory` so project skills are discovered regardless of launch directory
+- Inject plugin-bundled skills into the existing native `<available_skills>` block via a dedicated `skill-injection` helper
+- Improve `gh-create-pr` command
+
+## 0.10.1
+- Fix `agent-promote` so it returns successfully before the instance reloads
+- Update the OpenCode plugin SDK to `1.4.6`
+- Ensure runtime agent config takes precedence over loaded agent definitions during reload
+
+## 0.10.0
+- Add `tdd` skill for Test-Driven Development workflow
+- Make release command language-agnostic (supports Python, Rust, Go, PHP, Ruby)
+- Release command now uses Git tags as source of truth
+
+## 0.9.1
+- Allow code-simplifier to analyze untracked files
+- Add example for ask-questions-if-underspecified skill
+- Rewrite skills documentation with complete examples
+- Fix diff-summary to list untracked files
+- Fix commit-push command formatting
+
+## 0.9.0
+- Add /release command to guide release workflow
+- Replace code-release skill with ask-questions skill
+- Show a toast when loading a skill
+
+## 0.8.0
+- Add pdf-to-markdown tool for PDF conversion
+
+## 0.7.2
+- Document code-simplifier agent and command
+- Align command docs with new instructions
+- Move code-simplify guidance into agent docs
+
+## 0.7.1
+- Add code review agent commands
+- Update code-reviewer docs and skills list
+- Adjust GitHub release CI steps
+
+## 0.7.0
+- Add code-release skill and trim metadata
