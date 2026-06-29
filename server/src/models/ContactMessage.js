@@ -10,6 +10,7 @@ const contactMessageSchema = new mongoose.Schema(
     message: { type: String, required: true, maxlength: 4000 },
     isRead:  { type: Boolean, default: false },
     readAt:  { type: Date },
+    status:  { type: String, enum: ['unread', 'read', 'replied', 'archived'], default: 'unread' },
   },
   { timestamps: true }
 );

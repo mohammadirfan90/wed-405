@@ -7,7 +7,7 @@ router.post('/', c.createContactMessage);
 
 // Admin
 router.get('/', protect, adminOnly, c.adminListMessages);
-router.put('/:id', protect, adminOnly, c.updateMessage);
+router.patch('/:id/status', protect, adminOnly, c.updateMessageStatus);
 router.delete('/:id', protect, adminOnly, c.deleteMessage);
 
 module.exports = router;

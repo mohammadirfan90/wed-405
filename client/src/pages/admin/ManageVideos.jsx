@@ -5,6 +5,7 @@ import DashboardShell from '../../components/DashboardShell.jsx';
 const EMPTY = {
   youtubeUrl: '',
   title: '',
+  description: '',
   order: 0,
 };
 
@@ -38,13 +39,16 @@ export default function ManageVideos() {
   const [flash, setFlash] = useState(null);
 
   const load = () => api.get('/videos').then(({ data }) => setItems(data));
-  useEffect(load, []);
+  useEffect(() => {
+    load();
+  }, []);
 
   function startEdit(v) {
     setEditing(v);
     setForm({
       youtubeUrl: v.youtubeUrl || '',
       title: v.title || '',
+      description: v.description || '',
       order: v.order || 0,
     });
   }
@@ -61,6 +65,7 @@ export default function ManageVideos() {
     const payload = {
       youtubeUrl: form.youtubeUrl.trim(),
       title: form.title.trim(),
+      description: form.description.trim(),
       order: Number(form.order) || 0,
     };
     try {
@@ -112,7 +117,10 @@ export default function ManageVideos() {
                         Order: {v.order}
                       </span>
                     </div>
-                    <p className="mt-1 truncate text-[11px] text-ink-muted">{v.youtubeUrl}</p>
+                    {v.description && (
+                      <p className="mt-1 line-clamp-2 text-xs text-ink-muted">{v.description}</p>
+                    )}
+                    <p className="mt-1 truncate text-[10px] text-ink-muted">{v.youtubeUrl}</p>
                     <div className="mt-4 flex gap-2 border-t border-lav-200 pt-3">
                       <button onClick={() => startEdit(v)} className="rounded-md border border-lav-300 px-3 py-1 text-xs font-semibold text-ink hover:bg-lav-100">
                         Edit
@@ -143,6 +151,10 @@ export default function ManageVideos() {
           <div>
             <label className="label">Video Title</label>
             <input className="input-field" placeholder="e.g. Wedding Cinematic Highlight" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} />
+          </div>
+          <div>
+            <label className="label">Description</label>
+            <textarea className="input-field" placeholder="Video description..." value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} rows={3} />
           </div>
           <div>
             <label className="label">YouTube URL</label>

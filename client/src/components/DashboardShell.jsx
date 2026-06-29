@@ -28,7 +28,6 @@ import {
 import Logo from './Logo.jsx';
 import Footer from './Footer.jsx';
 import { useAuth } from '../context/AuthContext.jsx';
-import BookNowModal from './BookNowModal.jsx';
 
 // One nav tile. On md+ it renders icon-only (rail) with a hover tooltip.
 // On mobile it renders as a full-width row with icon + label.
@@ -64,7 +63,7 @@ function SearchIcon({ className = 'h-4 w-4' }) {
 }
 
 export default function DashboardShell({
-  variant = 'user',         // 'user' | 'admin'
+  variant = 'admin',         // 'admin'
   title,                    // required: page heading rendered in the topbar
   searchPlaceholder,
   topbarRight,              // optional ReactNode rendered in the topbar right
@@ -73,7 +72,6 @@ export default function DashboardShell({
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const [q, setQ] = useState('');
-  const [bookOpen, setBookOpen] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   // Close the mobile drawer whenever the route changes.
@@ -99,32 +97,21 @@ export default function DashboardShell({
   }, [drawerOpen]);
 
   const isAdmin = variant === 'admin';
-  const base = isAdmin ? '/admin' : '/dashboard';
+  const base = '/admin';
 
-  const userNav = [
-    { to: `${base}`,             label: 'Home',          end: true, icon: Home },
-    { to: `${base}/services`,    label: 'Services',      icon: Sparkles },
-    { to: `${base}/portfolio`,   label: 'Portfolio',     icon: Images },
-    { to: `${base}/packages`,    label: 'Packages',      icon: PackageSearch },
-    { to: `${base}/about`,       label: 'About us',      icon: Info },
-    { to: `${base}/blogs`,       label: 'Blogs',         icon: BookOpen },
-    { to: `${base}/bookings`,    label: 'My Bookings',   icon: CalendarCheck },
-  ];
   const adminNav = [
     { to: `${base}`,                label: 'Home',            end: true, icon: Home },
     { to: `${base}/packages`,       label: 'Manage Packages', icon: Boxes },
     { to: `${base}/bookings`,       label: 'Manage Bookings', icon: CalendarDays },
     { to: `${base}/portfolio`,      label: 'Manage Portfolio',icon: GalleryHorizontal },
-    { to: `${base}/blogs`,          label: 'Manage Blogs',    icon: Newspaper },
     { to: `${base}/testimonials`,   label: 'Testimonials',    icon: MessageSquareQuote },
-    { to: `${base}/users`,          label: 'Manage Users',    icon: Users },
-    { to: `${base}/admins`,         label: 'Manage Admins',   icon: ShieldCheck },
+    { to: `${base}/admins`,         label: 'Admin Profile',   icon: ShieldCheck },
     { to: `${base}/heroslides`,     label: 'Manage Hero Slides', icon: Sliders },
     { to: `${base}/stories`,        label: 'Manage Stories',    icon: Scroll },
     { to: `${base}/videos`,         label: 'Manage Videos',     icon: Film },
     { to: `${base}/settings`,       label: 'Manage Settings',   icon: Settings },
   ];
-  const nav = isAdmin ? adminNav : userNav;
+  const nav = adminNav;
 
   function onSearch(e) {
     e.preventDefault();
@@ -137,16 +124,7 @@ export default function DashboardShell({
   function onLogout() {
     setDrawerOpen(false);
     logout();
-    navigate(isAdmin ? '/admin/login' : '/login', { replace: true });
-  }
-
-  function onBookNow() {
-    setDrawerOpen(false);
-    if (!user) {
-      navigate('/login?from=' + encodeURIComponent(base + '/bookings'));
-      return;
-    }
-    setBookOpen(true);
+    navigate('/admin/login', { replace: true });
   }
 
   return (
@@ -313,15 +291,7 @@ export default function DashboardShell({
             </button>
           </form>
 
-          {!isAdmin && (
-            <button
-              type="button"
-              onClick={onBookNow}
-              className="order-2 ml-auto h-11 rounded-md bg-brand px-5 text-sm font-bold uppercase tracking-wide text-white shadow-soft hover:bg-brand-600 md:order-none md:ml-0 md:h-10"
-            >
-              Book Now
-            </button>
-          )}
+
 
           {topbarRight}
         </header>
@@ -333,7 +303,6 @@ export default function DashboardShell({
         <Footer />
       </div>
 
-      {bookOpen && <BookNowModal onClose={() => setBookOpen(false)} />}
     </div>
   );
 }

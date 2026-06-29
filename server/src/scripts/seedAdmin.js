@@ -3,8 +3,13 @@ const connectDB = require('../config/db');
 const Admin = require('../models/Admin');
 const Setting = require('../models/Setting');
 const HeroSlide = require('../models/HeroSlide');
-const StorySection = require('../models/StorySection');
+const Content = require('../models/Content');
 const VideoItem = require('../models/VideoItem');
+const Package = require('../models/Package');
+const Gallery = require('../models/Gallery');
+const Testimonial = require('../models/Testimonial');
+const Service = require('../models/Service');
+const Category = require('../models/Category');
 
 // Idempotent admin seeder. Safe to run on every deploy — it never duplicates
 // the admin and never downgrades a role. Prints a clear summary of the
@@ -14,33 +19,46 @@ const VideoItem = require('../models/VideoItem');
 async function seedAdmin() {
   await connectDB();
 
-  const phone = (process.env.SEED_ADMIN_PHONE || '+8801700000000').trim();
+  const username = (process.env.SEED_ADMIN_USERNAME || 'admin').trim();
   const password = process.env.SEED_ADMIN_PASSWORD || 'Admin@12345';
-  const name = process.env.SEED_ADMIN_NAME || 'Chronos Admin';
-  const email = (process.env.SEED_ADMIN_EMAIL || '').trim() || undefined;
+  const name = process.env.SEED_ADMIN_NAME || 'System Admin';
+  const email = process.env.SEED_ADMIN_EMAIL || 'admin@chronosmoments.com';
+  const phone = process.env.SEED_ADMIN_PHONE || '+8801700000000';
 
   console.log('[seed] Target database  :', require('mongoose').connection.name);
   console.log('[seed] Target collection:', Admin.collection.name);
-  console.log('[seed] Admin phone      :', phone);
-  console.log('[seed] Admin email      :', email || '(none)');
+  console.log('[seed] Admin username   :', username);
 
-  let admin = await Admin.findOne({ phone });
+  let admin = await Admin.findOne({
+    $or: [
+      { username },
+      { email }
+    ]
+  });
   if (admin) {
     let changed = false;
-    if (email && admin.email !== email) {
-      admin.email = email;
-      changed = true;
-    }
-    if (admin.name !== name) {
-      admin.name = name;
-      changed = true;
-    }
     if (!admin.isActive) {
       admin.isActive = true;
       changed = true;
     }
     if (!admin.isSuperAdmin) {
       admin.isSuperAdmin = true;
+      changed = true;
+    }
+    if (admin.name !== name) {
+      admin.name = name;
+      changed = true;
+    }
+    if (admin.email !== email) {
+      admin.email = email;
+      changed = true;
+    }
+    if (admin.phone !== phone) {
+      admin.phone = phone;
+      changed = true;
+    }
+    if (admin.username !== username) {
+      admin.username = username;
       changed = true;
     }
     if (changed) {
@@ -51,13 +69,13 @@ async function seedAdmin() {
     }
   } else {
     admin = await Admin.create({
+      username,
+      passwordHash: password, // Mongoose pre-save hashes this
       name,
-      phone,
       email,
-      password,
+      phone,
       role: 'admin',
       isSuperAdmin: true,
-      mustChangePassword: true,
     });
     console.log('[seed] Created admin (id=' + admin._id + ').');
   }
@@ -77,7 +95,7 @@ async function seedAdmin() {
   }
   console.log('[seed] Seeded settings.');
 
-  // Seed default slides
+  // Seed default slides (compatibility)
   const slideCount = await HeroSlide.countDocuments();
   if (slideCount === 0) {
     await HeroSlide.create([
@@ -103,21 +121,24 @@ async function seedAdmin() {
     console.log('[seed] Seeded default Hero Slides.');
   }
 
-  // Seed default story sections
-  const storyCount = await StorySection.countDocuments();
+  // Seed default story sections (compatibility)
+  const storyCount = await Content.countDocuments({ section: 'story' });
   if (storyCount === 0) {
-    await StorySection.create([
+    await Content.create([
       {
-        title: "Welcome To Wedding Heritage",
-        body: "At Wedding Heritage, we believe that every love story is unique and deserves to be celebrated in its truest form. From intimate moments to grand celebrations, we are dedicated to capturing the joy, laughter, and love that make your wedding day unforgettable.\n\nFounded by passionate storytellers, our mission is to preserve your memories with artistry, elegance, and attention to detail. Each photograph and video we create is a testament to the emotions and stories that unfold on your special day.",
-        image: "https://weddingheritagebd.com/wp-content/uploads/2026/02/DSC03273-scaled.jpg",
-        order: 1,
+        section: 'story',
+        data: {
+          title: "Welcome To Wedding Heritage",
+          body: "At Wedding Heritage, we believe that every love story is unique and deserves to be celebrated in its truest form. From intimate moments to grand celebrations, we are dedicated to capturing the joy, laughter, and love that make your wedding day unforgettable.\n\nFounded by passionate storytellers, our mission is to preserve your memories with artistry, elegance, and attention to detail. Each photograph and video we create is a testament to the emotions and stories that unfold on your special day.",
+          image: "https://weddingheritagebd.com/wp-content/uploads/2026/02/DSC03273-scaled.jpg",
+          order: 1,
+        }
       },
     ]);
     console.log('[seed] Seeded default Story Sections.');
   }
 
-  // Seed default cinematography videos
+  // Seed default cinematography videos (compatibility)
   const videoCount = await VideoItem.countDocuments();
   if (videoCount === 0) {
     await VideoItem.create([
@@ -140,6 +161,172 @@ async function seedAdmin() {
     console.log('[seed] Seeded default YouTube Videos.');
   }
 
+  // Seed default packages
+  const packageCount = await Package.countDocuments();
+  if (packageCount === 0) {
+    await Package.create([
+      {
+        title: "Standard Package",
+        slug: "standard-package",
+        category: "Wedding",
+        price: 35000,
+        duration: "6 Hours",
+        description: "Great value wedding photography.",
+        features: ["1 Senior Photographer", "1 Associate Photographer", "100 Edited Photos", "All Raw Photos Provided"],
+        coverImage: "https://weddingheritagebd.com/wp-content/uploads/2026/02/01_1-scaled.jpg",
+      },
+      {
+        title: "Premium Package",
+        slug: "premium-package",
+        category: "Wedding",
+        price: 65000,
+        duration: "Full Day",
+        description: "Comprehensive wedding coverage.",
+        features: ["1 Chief Photographer", "2 Senior Photographers", "200 Edited Photos", "Premium Photo Book", "All Raw Photos"],
+        coverImage: "https://weddingheritagebd.com/wp-content/uploads/2026/02/01-1-scaled.jpg",
+      },
+      {
+        title: "Signature Package",
+        slug: "signature-package",
+        category: "Wedding",
+        price: 95000,
+        duration: "Full Day + Pre-Wedding",
+        description: "Ultimate luxury photography & cinematography package.",
+        features: ["Chief Photographer & Team", "3 Senior Photographers", "Pre-Wedding Shoot", "Premium Photo Book + Framed Print", "All Raw Photos"],
+        coverImage: "https://weddingheritagebd.com/wp-content/uploads/2026/02/DSC06887-1-scaled.jpg",
+      }
+    ]);
+    console.log('[seed] Seeded default Packages.');
+  }
+
+  // Seed default gallery items
+  const galleryCount = await Gallery.countDocuments();
+  if (galleryCount === 0) {
+    await Gallery.create([
+      {
+        title: "Tasnim & Milon's Majestic Wedding",
+        slug: "tasnim-milon-wedding",
+        category: "Wedding",
+        url: "https://weddingheritagebd.com/wp-content/uploads/2026/02/01_1-scaled.jpg",
+        coverImage: "https://weddingheritagebd.com/wp-content/uploads/2026/02/01_1-scaled.jpg",
+        images: [
+          "https://weddingheritagebd.com/wp-content/uploads/2026/02/01_1-scaled.jpg",
+          "https://weddingheritagebd.com/wp-content/uploads/2026/02/01-1-scaled.jpg"
+        ],
+        description: "A gorgeous luxury wedding at Sena Malancha.",
+        eventDate: new Date(),
+        location: "Sena Malancha, Dhaka",
+        isPublished: true,
+        isFeatured: true,
+      },
+      {
+        title: "Romantic Pre-Wedding at Dhanmondi Lake",
+        slug: "dhanmondi-lake-pre-wedding",
+        category: "Pre-Wedding",
+        url: "https://weddingheritagebd.com/wp-content/uploads/2026/02/DSC06887-1-scaled.jpg",
+        coverImage: "https://weddingheritagebd.com/wp-content/uploads/2026/02/DSC06887-1-scaled.jpg",
+        images: [
+          "https://weddingheritagebd.com/wp-content/uploads/2026/02/DSC06887-1-scaled.jpg"
+        ],
+        description: "Candid love stories under the sunset.",
+        eventDate: new Date(),
+        location: "Dhanmondi, Dhaka",
+        isPublished: true,
+        isFeatured: true,
+      },
+      {
+        title: "Zara & Abrar's Engagement",
+        slug: "zara-abrar-engagement",
+        category: "Engagement",
+        url: "https://weddingheritagebd.com/wp-content/uploads/2026/02/DSC03273-scaled.jpg",
+        coverImage: "https://weddingheritagebd.com/wp-content/uploads/2026/02/DSC03273-scaled.jpg",
+        images: [
+          "https://weddingheritagebd.com/wp-content/uploads/2026/02/DSC03273-scaled.jpg"
+        ],
+        description: "An intimate rooftop engagement ceremony.",
+        eventDate: new Date(),
+        location: "Gulshan, Dhaka",
+        isPublished: true,
+        isFeatured: true,
+      }
+    ]);
+    console.log('[seed] Seeded default Gallery items.');
+  }
+
+  // Seed default testimonials
+  const testimonialCount = await Testimonial.countDocuments();
+  if (testimonialCount === 0) {
+    await Testimonial.create([
+      {
+        authorName: "Anika & Fahim",
+        role: "Bride & Groom",
+        rating: 5,
+        body: "Wedding Heritage turned our wedding into a fairy tale. The photos and cinematographic reels captured the raw emotions perfectly. We highly recommend them!",
+        isApproved: true,
+      },
+      {
+        authorName: "Tanvir Rahman",
+        role: "Groom",
+        rating: 5,
+        body: "Exceptional quality and highly professional team. The signature book they delivered is a masterpiece. Worth every BDT!",
+        isApproved: true,
+      }
+    ]);
+    console.log('[seed] Seeded default Testimonials.');
+  }
+
+  // Seed Home Content (Spec)
+  const homeContentCount = await Content.countDocuments({ section: 'home' });
+  if (homeContentCount === 0) {
+    await Content.create({
+      section: 'home',
+      data: {
+        heroText: "Turning Your Forever Moments into Timeless Memories",
+        bannerImage: "https://weddingheritagebd.com/wp-content/uploads/2026/02/01_1-scaled.jpg",
+        introText: "At Wedding Heritage, we bring your wedding story to life with stunning imagery and heartfelt storytelling."
+      }
+    });
+    console.log('[seed] Seeded default Home Content.');
+  }
+
+  // Seed About Content (Spec)
+  const aboutContentCount = await Content.countDocuments({ section: 'about' });
+  if (aboutContentCount === 0) {
+    await Content.create({
+      section: 'about',
+      data: {
+        bio: "At Wedding Heritage, we believe that every love story is unique and deserves to be celebrated in its truest form. Founded by passionate storytellers, our mission is to preserve your memories with artistry, elegance, and attention to detail.",
+        mission: "Capturing love the way it feels, preserved with artistry and elegance.",
+        team: ["Irfan (Lead Photographer)", "Milon (Lead Cinematographer)", "Zara (Visual Artist)"]
+      }
+    });
+    console.log('[seed] Seeded default About Content.');
+  }
+
+  // Seed Services (Spec)
+  const serviceCount = await Service.countDocuments();
+  if (serviceCount === 0) {
+    await Service.create([
+      { name: "Pre Wedding Photography", description: "Romantic couple shoots under the sunset.", price: 15000 },
+      { name: "Holud & Mehendi photography", description: "Capturing colorful traditions and emotions.", price: 20000 },
+      { name: "Wedding Day Photography", description: "High-end luxury wedding portraiture.", price: 35000 },
+      { name: "Reception Cinematography", description: "Cinematic teasers and full-length wedding films.", price: 40000 }
+    ]);
+    console.log('[seed] Seeded default Services.');
+  }
+
+  // Seed Categories (Spec)
+  const categoryCount = await Category.countDocuments();
+  if (categoryCount === 0) {
+    await Category.create([
+      { name: "Wedding" },
+      { name: "Pre-Wedding" },
+      { name: "Engagement" },
+      { name: "Event" }
+    ]);
+    console.log('[seed] Seeded default Categories.');
+  }
+
   return admin;
 }
 
@@ -151,9 +338,7 @@ seedAdmin()
     console.log('============================================================');
     console.log('  DB:       ' + require('mongoose').connection.name);
     console.log('  Coll:     ' + Admin.collection.name);
-    console.log('  Name:     ' + admin.name);
-    console.log('  Phone:    ' + admin.phone);
-    console.log('  Email:    ' + (admin.email || '(none)'));
+    console.log('  Username: ' + admin.username);
     console.log('  Password: ' + (process.env.SEED_ADMIN_PASSWORD || 'Admin@12345'));
     console.log('  Role:     ' + admin.role + (admin.isSuperAdmin ? ' (super)' : ''));
     console.log('------------------------------------------------------------');
@@ -166,7 +351,7 @@ seedAdmin()
   .catch((err) => {
     console.error('[seed] FAILED:', err.message);
     if (err.code === 11000) {
-      console.error('[seed] Hint: a user with that phone/email already exists in this DB.');
+      console.error('[seed] Hint: a record with that key already exists in the DB.');
     }
     process.exit(1);
   });

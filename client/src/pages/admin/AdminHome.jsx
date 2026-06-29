@@ -91,8 +91,8 @@ export default function AdminHome() {
     pendingBookings: 0,
     approvedBookings: 0,
     completedBookings: 0,
-    users: 0,
     admins: 0,
+    activeAdmins: 0,
     portfolio: 0,
     publishedPortfolio: 0,
     blogs: 0,
@@ -113,13 +113,11 @@ export default function AdminHome() {
       // dashboard still renders when one collection is empty.
       const safe = (p) => p.catch(() => ({ data: [] }));
       const [
-        packages, bookings, users, portfolio, blogs, testimonials, messages,
+        packages, bookings, portfolio, testimonials, messages,
       ] = await Promise.all([
         safe(api.get('/packages/admin/all')),
         safe(api.get('/bookings')),
-        safe(api.get('/users')),
-        safe(api.get('/portfolio/admin/all')),
-        safe(api.get('/blogs/admin/all')),
+        safe(api.get('/gallery/admin/all')),
         safe(api.get('/testimonials/admin/all')),
         safe(api.get('/contact')),
       ]);
@@ -127,9 +125,7 @@ export default function AdminHome() {
 
       const pkgArr = packages.data || [];
       const bookArr = bookings.data || [];
-      const userArr = users.data || [];
       const portArr = portfolio.data || [];
-      const blogArr = blogs.data || [];
       const testArr = testimonials.data || [];
       const msgArr = messages.data || [];
 
@@ -139,12 +135,8 @@ export default function AdminHome() {
         pendingBookings: bookArr.filter((b) => b.status === 'pending').length,
         approvedBookings: bookArr.filter((b) => b.status === 'approved').length,
         completedBookings: bookArr.filter((b) => b.status === 'completed').length,
-        users: userArr.length,
-        admins: userArr.filter((u) => u.role === 'admin').length,
         portfolio: portArr.length,
         publishedPortfolio: portArr.filter((p) => p.isPublished).length,
-        blogs: blogArr.length,
-        publishedBlogs: blogArr.filter((b) => b.isPublished).length,
         testimonials: testArr.length,
         pendingTestimonials: testArr.filter((t) => !t.isApproved).length,
         messages: msgArr.length,
@@ -160,11 +152,10 @@ export default function AdminHome() {
   }, []);
 
   const quickLinks = useMemo(() => ([
-    { to: '/admin/users', title: 'Manage Users', sub: 'Roles, status, deactivate', count: stats.users },
+    { to: '/admin/admins', title: 'Admin Profile', sub: 'Update profile & password' },
     { to: '/admin/packages', title: 'Manage Packages', sub: 'Create / edit offerings', count: stats.packages },
     { to: '/admin/bookings', title: 'Manage Bookings', sub: 'Approve, decline, complete', count: stats.pendingBookings },
     { to: '/admin/portfolio', title: 'Manage Portfolio', sub: 'Featured galleries', count: stats.portfolio },
-    { to: '/admin/blogs', title: 'Manage Blogs', sub: 'Articles & stories', count: stats.blogs },
     { to: '/admin/testimonials', title: 'Manage Testimonials', sub: 'Approve client quotes', count: stats.pendingTestimonials },
     { to: '/admin/contact', title: 'Contact Inbox', sub: 'Customer enquiries', count: stats.unreadMessages },
     { to: '/admin/heroslides', title: 'Manage Hero Slides', sub: 'Sliders and backgrounds' },
@@ -188,7 +179,7 @@ export default function AdminHome() {
       </div>
 
       {/* Top-row KPIs */}
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <StatCard
           label="Active Bookings"
           value={stats.bookings}
@@ -197,11 +188,11 @@ export default function AdminHome() {
           to="/admin/bookings"
         />
         <StatCard
-          label="Total Users"
-          value={stats.users}
-          hint={`${stats.admins} admins`}
+          label="Admin Profile"
+          value={1}
+          hint="active profile"
           tone="bg-lav-100"
-          to="/admin/users"
+          to="/admin/admins"
         />
         <StatCard
           label="Portfolio Items"
@@ -209,13 +200,6 @@ export default function AdminHome() {
           hint={`${stats.publishedPortfolio} published`}
           tone="bg-white"
           to="/admin/portfolio"
-        />
-        <StatCard
-          label="Blog Posts"
-          value={stats.blogs}
-          hint={`${stats.publishedBlogs} published`}
-          tone="bg-lav-100"
-          to="/admin/blogs"
         />
       </div>
 

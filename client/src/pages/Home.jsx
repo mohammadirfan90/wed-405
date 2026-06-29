@@ -18,6 +18,7 @@ import {
   Clock,
   Send,
   Sparkles,
+  Video,
 } from 'lucide-react';
 import api from '../lib/api';
 import Logo from '../components/Logo.jsx';
@@ -49,7 +50,6 @@ export default function Home() {
   const [portfolio, setPortfolio] = useState([]);
   const [videos, setVideos] = useState([]);
   const [testimonials, setTestimonials] = useState([]);
-  const [blogs, setBlogs] = useState([]);
   const [settings, setSettings] = useState({
     whatsapp_number: '+8801327292323',
     contact_email: 'info@weddingheritagebd.com',
@@ -97,12 +97,11 @@ export default function Home() {
     const safe = (p) => p.catch(() => ({ data: [] }));
 
     api.get('/hero').then(({ data }) => setSlides(data)).catch(() => {});
-    api.get('/story').then(({ data }) => setStories(data)).catch(() => {});
+    api.get('/content?section=story').then(({ data }) => setStories(data)).catch(() => {});
     api.get('/packages').then(({ data }) => setPackages(data)).catch(() => {});
-    api.get('/portfolio').then(({ data }) => setPortfolio(data)).catch(() => {});
+    api.get('/gallery').then(({ data }) => setPortfolio(data)).catch(() => {});
     api.get('/videos').then(({ data }) => setVideos(data)).catch(() => {});
     api.get('/testimonials').then(({ data }) => setTestimonials(data.filter(t => t.isApproved))).catch(() => {});
-    api.get('/blogs').then(({ data }) => setBlogs(data.filter(b => b.isPublished))).catch(() => {});
     api.get('/settings').then(({ data }) => setSettings(prev => ({ ...prev, ...data }))).catch(() => {});
   }, []);
 
@@ -197,47 +196,39 @@ Please review my request and let me know the payment details. Thank you!`;
   }, [packages, bookingForm.packageId]);
 
   return (
-    <div className="min-h-screen bg-[#0B0A0C] text-gray-100 font-body antialiased">
+    <div className="min-h-screen bg-cream text-charcoal font-body antialiased">
       {/* Dynamic Navigation Bar */}
-      <nav className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${scrolled ? 'bg-[#0B0A0C]/90 backdrop-blur-md py-3 shadow-lg border-b border-[#D4AF37]/25' : 'bg-transparent py-5'}`}>
+      <nav className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${scrolled ? 'bg-cream/90 backdrop-blur-[10px] py-3 shadow-md border-b border-taupe/20' : 'bg-transparent py-5'}`}>
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex items-center justify-between">
           <div className="flex items-center gap-2 cursor-pointer" onClick={() => scrollTo('home')}>
             <Logo size={40} />
-            <span className="font-serif-luxury text-xl font-bold tracking-widest text-white uppercase hidden sm:inline">
+            <span className={`font-serif-luxury text-xl font-bold tracking-widest uppercase hidden sm:inline transition-colors ${scrolled ? 'text-charcoal' : 'text-white'}`}>
               CHRONOS <span className="text-[#D4AF37]">MOMENTS</span>
             </span>
           </div>
 
           {/* Desktop Nav Links */}
           <div className="hidden lg:flex items-center gap-8 text-sm font-semibold tracking-wider uppercase">
-            <button onClick={() => scrollTo('home')} className="hover:text-[#D4AF37] transition text-gray-300">Home</button>
-            <button onClick={() => scrollTo('about')} className="hover:text-[#D4AF37] transition text-gray-300">About Us</button>
-            <button onClick={() => scrollTo('services')} className="hover:text-[#D4AF37] transition text-gray-300">Services</button>
-            <button onClick={() => scrollTo('portfolio')} className="hover:text-[#D4AF37] transition text-gray-300">Portfolio</button>
-            <button onClick={() => scrollTo('packages')} className="hover:text-[#D4AF37] transition text-gray-300">Packages</button>
-            <button onClick={() => scrollTo('blog')} className="hover:text-[#D4AF37] transition text-gray-300">Blog</button>
-            <button onClick={() => scrollTo('contact')} className="hover:text-[#D4AF37] transition text-gray-300">Contact Us</button>
+            <button onClick={() => scrollTo('home')} className={`hover:text-[#D4AF37] transition ${scrolled ? 'text-charcoal/80 hover:text-gold' : 'text-gray-300'}`}>Home</button>
+            <button onClick={() => scrollTo('about')} className={`hover:text-[#D4AF37] transition ${scrolled ? 'text-charcoal/80 hover:text-gold' : 'text-gray-300'}`}>About Us</button>
+            <button onClick={() => scrollTo('services')} className={`hover:text-[#D4AF37] transition ${scrolled ? 'text-charcoal/80 hover:text-gold' : 'text-gray-300'}`}>Services</button>
+            <button onClick={() => scrollTo('portfolio')} className={`hover:text-[#D4AF37] transition ${scrolled ? 'text-charcoal/80 hover:text-gold' : 'text-gray-300'}`}>Portfolio</button>
+            <button onClick={() => scrollTo('packages')} className={`hover:text-[#D4AF37] transition ${scrolled ? 'text-charcoal/80 hover:text-gold' : 'text-gray-300'}`}>Packages</button>
+            <button onClick={() => scrollTo('contact')} className={`hover:text-[#D4AF37] transition ${scrolled ? 'text-charcoal/80 hover:text-gold' : 'text-gray-300'}`}>Contact Us</button>
           </div>
 
           <div className="hidden lg:flex items-center gap-4">
-            {user ? (
+            {(user && user.role === 'admin') && (
               <Link
-                to={user.role === 'admin' ? '/admin' : '/dashboard'}
-                className="text-xs font-semibold px-4 py-2 border border-gray-600 rounded-lg hover:border-[#D4AF37] hover:text-[#D4AF37] transition uppercase tracking-wider"
+                to="/admin"
+                className={`text-xs font-semibold px-4 py-2 border rounded-lg hover:border-[#D4AF37] hover:text-[#D4AF37] transition uppercase tracking-wider luxury-button ${scrolled ? 'border-taupe/30 text-charcoal' : 'border-gray-600 text-white'}`}
               >
-                {user.role === 'admin' ? 'Admin Console' : 'My Dashboard'}
-              </Link>
-            ) : (
-              <Link
-                to="/login"
-                className="text-xs font-semibold px-4 py-2 border border-gray-600 rounded-lg hover:border-[#D4AF37] hover:text-[#D4AF37] transition uppercase tracking-wider"
-              >
-                Sign In
+                Admin Console
               </Link>
             )}
             <button
               onClick={() => scrollTo('contact')}
-              className="gold-bg-gradient hover:opacity-95 text-[#0B0A0C] font-bold text-xs px-5 py-2.5 rounded-lg shadow-md uppercase tracking-wider transition transform hover:-translate-y-0.5 active:translate-y-0"
+              className="gold-bg-gradient text-[#0B0A0C] font-bold text-xs px-5 py-2.5 rounded-[12px] shadow-md uppercase tracking-wider luxury-button"
             >
               BOOK NOW
             </button>
@@ -245,24 +236,17 @@ Please review my request and let me know the payment details. Thank you!`;
 
           {/* Mobile Menu Button */}
           <div className="lg:hidden flex items-center gap-4">
-            {user ? (
+            {(user && user.role === 'admin') && (
               <Link
-                to={user.role === 'admin' ? '/admin' : '/dashboard'}
-                className="text-[10px] font-semibold px-2 py-1.5 border border-gray-600 rounded hover:border-[#D4AF37] hover:text-[#D4AF37] transition uppercase tracking-wider"
+                to="/admin"
+                className={`text-[10px] font-semibold px-2 py-1.5 border rounded hover:border-[#D4AF37] hover:text-[#D4AF37] transition uppercase tracking-wider luxury-button ${scrolled ? 'border-taupe/30 text-charcoal' : 'border-gray-600 text-white'}`}
               >
                 Console
-              </Link>
-            ) : (
-              <Link
-                to="/login"
-                className="text-[10px] font-semibold px-2.5 py-1.5 border border-gray-600 rounded hover:border-[#D4AF37] hover:text-[#D4AF37] transition uppercase tracking-wider"
-              >
-                Sign In
               </Link>
             )}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-1 text-gray-400 hover:text-white"
+              className={`p-1 transition-colors ${scrolled ? 'text-charcoal hover:text-gold' : 'text-gray-400 hover:text-white'}`}
               aria-label="Toggle menu"
             >
               {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -272,17 +256,16 @@ Please review my request and let me know the payment details. Thank you!`;
 
         {/* Mobile Navigation Drawer */}
         {mobileMenuOpen && (
-          <div className="lg:hidden bg-[#121113] border-b border-[#D4AF37]/25 px-4 pt-2 pb-6 space-y-3 flex flex-col text-sm uppercase tracking-wider">
-            <button onClick={() => scrollTo('home')} className="text-left py-2 hover:text-[#D4AF37] border-b border-gray-800">Home</button>
-            <button onClick={() => scrollTo('about')} className="text-left py-2 hover:text-[#D4AF37] border-b border-gray-800">About Us</button>
-            <button onClick={() => scrollTo('services')} className="text-left py-2 hover:text-[#D4AF37] border-b border-gray-800">Services</button>
-            <button onClick={() => scrollTo('portfolio')} className="text-left py-2 hover:text-[#D4AF37] border-b border-gray-800">Portfolio</button>
-            <button onClick={() => scrollTo('packages')} className="text-left py-2 hover:text-[#D4AF37] border-b border-gray-800">Packages</button>
-            <button onClick={() => scrollTo('blog')} className="text-left py-2 hover:text-[#D4AF37] border-b border-gray-800">Blog</button>
-            <button onClick={() => scrollTo('contact')} className="text-left py-2 hover:text-[#D4AF37] border-b border-gray-800">Contact Us</button>
+          <div className="lg:hidden bg-cream/95 backdrop-blur-[10px] border-b border-taupe/20 px-4 pt-2 pb-6 space-y-3 flex flex-col text-sm uppercase tracking-wider text-charcoal">
+            <button onClick={() => scrollTo('home')} className="text-left py-2 hover:text-[#D4AF37] border-b border-taupe/10">Home</button>
+            <button onClick={() => scrollTo('about')} className="text-left py-2 hover:text-[#D4AF37] border-b border-taupe/10">About Us</button>
+            <button onClick={() => scrollTo('services')} className="text-left py-2 hover:text-[#D4AF37] border-b border-taupe/10">Services</button>
+            <button onClick={() => scrollTo('portfolio')} className="text-left py-2 hover:text-[#D4AF37] border-b border-taupe/10">Portfolio</button>
+            <button onClick={() => scrollTo('packages')} className="text-left py-2 hover:text-[#D4AF37] border-b border-taupe/10">Packages</button>
+            <button onClick={() => scrollTo('contact')} className="text-left py-2 hover:text-[#D4AF37] border-b border-taupe/10">Contact Us</button>
             <button
               onClick={() => scrollTo('contact')}
-              className="w-full text-center gold-bg-gradient py-3 rounded-lg text-[#0B0A0C] font-bold shadow-md uppercase tracking-wider"
+              className="w-full text-center gold-bg-gradient py-3 rounded-[12px] text-[#0B0A0C] font-bold shadow-md uppercase tracking-wider luxury-button"
             >
               BOOK NOW
             </button>
@@ -361,38 +344,38 @@ Please review my request and let me know the payment details. Thank you!`;
       </section>
 
       {/* About Us / Stories Section */}
-      <section id="about" className="py-20 border-b border-[#D4AF37]/10 bg-[#121113]">
+      <section id="about" className="py-20 border-b border-taupe/20 bg-cream">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           {stories.length > 0 ? (
             stories.map((s, index) => (
               <div key={s._id} className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 {/* Image side */}
                 <div className={`relative ${index % 2 === 1 ? 'lg:order-last' : ''}`}>
-                  <div className="p-3 border border-[#D4AF37]/35 rounded-2xl bg-[#0B0A0C]">
+                  <div className="p-3 border border-taupe/20 rounded-[24px] bg-cream luxury-image-card shadow-md">
                     <img
                       src={s.image}
                       alt={s.title}
-                      className="w-full aspect-[4/3] object-cover rounded-xl shadow-2xl filter brightness-95"
+                      className="w-full aspect-[4/3] object-cover rounded-xl filter brightness-95"
                     />
                   </div>
-                  <div className="absolute -bottom-4 -right-4 -z-10 w-48 h-48 border-2 border-dashed border-[#D4AF37]/20 rounded-full" />
+                  <div className="absolute -bottom-4 -right-4 -z-10 w-48 h-48 border-2 border-dashed border-taupe/20 rounded-full" />
                 </div>
 
                 {/* Text side */}
                 <div className="space-y-6">
                   <div className="flex items-center gap-2">
-                    <span className="h-[1px] w-8 bg-[#D4AF37]" />
-                    <span className="font-serif-luxury italic text-[#D4AF37] text-sm uppercase tracking-widest">ABOUT OUR CRAFT</span>
+                    <span className="h-[1px] w-8 bg-gold" />
+                    <span className="font-serif-luxury italic text-gold text-sm uppercase tracking-widest">ABOUT OUR CRAFT</span>
                   </div>
-                  <h2 className="font-serif-luxury text-3xl sm:text-4xl font-bold tracking-tight text-white">
+                  <h2 className="font-serif-luxury text-3xl sm:text-4xl font-bold tracking-tight text-charcoal">
                     {s.title}
                   </h2>
-                  <div className="text-gray-300 font-light space-y-4 whitespace-pre-line leading-relaxed">
+                  <div className="text-charcoal/80 font-light space-y-4 whitespace-pre-line leading-relaxed">
                     {s.body}
                   </div>
                   <button
                     onClick={() => scrollTo('contact')}
-                    className="inline-flex items-center gap-2 font-bold text-sm text-[#D4AF37] hover:underline uppercase tracking-wider"
+                    className="inline-flex items-center gap-2 font-bold text-sm text-gold hover:underline uppercase tracking-wider luxury-button"
                   >
                     Discuss your wedding <ArrowRight className="h-4 w-4" />
                   </button>
@@ -400,19 +383,19 @@ Please review my request and let me know the payment details. Thank you!`;
               </div>
             ))
           ) : (
-            <p className="text-center text-gray-400">Loading dynamic story data...</p>
+            <p className="text-center text-charcoal/50">Loading dynamic story data...</p>
           )}
         </div>
       </section>
 
       {/* Services Section */}
-      <section id="services" className="py-20 border-b border-[#D4AF37]/10 bg-[#0B0A0C]">
+      <section id="services" className="py-20 border-b border-taupe/20 bg-cream">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
           <div className="max-w-2xl mx-auto space-y-4 mb-16">
-            <span className="font-serif-luxury italic text-[#D4AF37] text-sm uppercase tracking-widest">Professional Services</span>
-            <h2 className="font-serif-luxury text-3xl sm:text-4xl font-bold text-white">What We Capture</h2>
-            <div className="w-24 h-[1px] bg-[#D4AF37] mx-auto" />
-            <p className="text-sm text-gray-400 font-light">
+            <span className="font-serif-luxury italic text-gold text-sm uppercase tracking-widest">Professional Services</span>
+            <h2 className="font-serif-luxury text-3xl sm:text-4xl font-bold text-charcoal">What We Capture</h2>
+            <div className="w-24 h-[1px] bg-gold mx-auto" />
+            <p className="text-sm text-charcoal/70 font-light">
               We specialize in capturing your special moments with luxury storytelling, artistic photography, and premium cinematography.
             </p>
           </div>
@@ -423,18 +406,18 @@ Please review my request and let me know the payment details. Thank you!`;
               { title: 'Holud & Mehendi', sub: 'Vibrant Colors & Joy', icon: Camera },
               { title: 'Wedding Day', sub: 'Sacred Rituals & Glamour', icon: Star },
               { title: 'Reception Night', sub: 'Grand Festivities', icon: Clock },
-              { title: 'Cinematography', sub: 'Teasers & Films', icon: VideoItem },
+              { title: 'Cinematography', sub: 'Teasers & Films', icon: Video },
             ].map((s, index) => (
               <div
                 key={index}
-                className="group relative rounded-xl border border-gray-800 bg-[#121113] p-6 hover:border-[#D4AF37] transition duration-300 cursor-pointer"
+                className="group relative border border-taupe/20 bg-cream p-6 hover:border-gold transition duration-300 cursor-pointer luxury-card luxury-button"
               >
-                <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-[#D4AF37]/10 text-[#D4AF37]">
-                  <Camera className="h-6 w-6" />
+                <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-[12px] bg-gold/10 text-gold">
+                  <s.icon className="h-6 w-6" />
                 </div>
-                <h3 className="text-lg font-bold text-white group-hover:text-[#D4AF37] transition">{s.title}</h3>
-                <p className="mt-2 text-xs text-gray-400 font-light">{s.sub}</p>
-                <div className="absolute bottom-0 inset-x-0 h-1 bg-gradient-to-r from-transparent via-[#D4AF37]/50 to-transparent scale-x-0 group-hover:scale-x-100 transition duration-300" />
+                <h3 className="text-lg font-bold text-charcoal group-hover:text-gold transition">{s.title}</h3>
+                <p className="mt-2 text-xs text-charcoal/70 font-light">{s.sub}</p>
+                <div className="absolute bottom-0 inset-x-0 h-1 bg-gradient-to-r from-transparent via-gold/50 to-transparent scale-x-0 group-hover:scale-x-100 transition duration-300" />
               </div>
             ))}
           </div>
@@ -442,21 +425,21 @@ Please review my request and let me know the payment details. Thank you!`;
       </section>
 
       {/* Portfolio Grid Section */}
-      <section id="portfolio" className="py-20 border-b border-[#D4AF37]/10 bg-[#121113]">
+      <section id="portfolio" className="py-20 border-b border-taupe/20 bg-cream">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
             <div>
-              <span className="font-serif-luxury italic text-[#D4AF37] text-sm uppercase tracking-widest">Our Work</span>
-              <h2 className="font-serif-luxury text-3xl sm:text-4xl font-bold text-white mt-1">Featured Gallery</h2>
+              <span className="font-serif-luxury italic text-gold text-sm uppercase tracking-widest">Our Work</span>
+              <h2 className="font-serif-luxury text-3xl sm:text-4xl font-bold text-charcoal mt-1">Featured Gallery</h2>
             </div>
             
             {/* Tabs */}
-            <div className="flex flex-wrap gap-2 border-b border-gray-800 pb-2 md:border-0 md:pb-0">
+            <div className="flex flex-wrap gap-2 border-b border-taupe/20 pb-2 md:border-0 md:pb-0">
               {['Wedding', 'Pre-Wedding', 'Engagement', 'Event'].map((tab) => (
                 <button
                   key={tab}
                   onClick={() => setActiveTab(tab)}
-                  className={`px-4 py-2 text-xs font-semibold uppercase tracking-wider transition-all rounded-lg ${activeTab === tab ? 'gold-bg-gradient text-[#0B0A0C]' : 'border border-gray-800 hover:border-gray-600 text-gray-300'}`}
+                  className={`px-4 py-2 text-xs font-semibold uppercase tracking-wider transition-all rounded-[12px] luxury-button ${activeTab === tab ? 'gold-bg-gradient text-[#0B0A0C]' : 'border border-taupe/20 hover:border-taupe/40 text-charcoal/80 bg-cream'}`}
                 >
                   {tab}
                 </button>
@@ -470,7 +453,7 @@ Please review my request and let me know the payment details. Thank you!`;
                 <div
                   key={p._id}
                   onClick={() => setLightbox({ title: p.title, images: p.images || [], index: 0 })}
-                  className="group relative overflow-hidden rounded-xl bg-gray-900 border border-gray-800 transition shadow-lg cursor-pointer"
+                  className="group relative overflow-hidden transition shadow-md cursor-pointer border border-taupe/20 luxury-card luxury-image-card"
                 >
                   <div className="aspect-[4/3] overflow-hidden">
                     <img
@@ -481,11 +464,11 @@ Please review my request and let me know the payment details. Thank you!`;
                   </div>
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-75 group-hover:opacity-85 transition" />
                   <div className="absolute bottom-0 inset-x-0 p-5 space-y-1">
-                    <span className="text-[10px] text-[#D4AF37] font-semibold uppercase tracking-wider">{p.category}</span>
+                    <span className="text-[10px] text-gold font-semibold uppercase tracking-wider">{p.category}</span>
                     <h3 className="text-base font-bold text-white">{p.title}</h3>
                     {p.location && (
                       <p className="flex items-center gap-1 text-xs text-gray-300 font-light">
-                        <MapPin className="h-3 w-3 text-[#D4AF37]" /> {p.location}
+                        <MapPin className="h-3 w-3 text-gold" /> {p.location}
                       </p>
                     )}
                   </div>
@@ -493,18 +476,18 @@ Please review my request and let me know the payment details. Thank you!`;
               ))}
             </div>
           ) : (
-            <p className="text-center text-gray-400 py-10 font-light">No published portfolio items in this category.</p>
+            <p className="text-center text-charcoal/50 py-10 font-light">No published portfolio items in this category.</p>
           )}
         </div>
       </section>
 
       {/* Cinematography Video Carousel Section */}
-      <section className="py-20 border-b border-[#D4AF37]/10 bg-[#0B0A0C]">
+      <section className="py-20 border-b border-taupe/20 bg-cream">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl mx-auto space-y-4 mb-16 text-center">
-            <span className="font-serif-luxury italic text-[#D4AF37] text-sm uppercase tracking-widest">Cinematography reels</span>
-            <h2 className="font-serif-luxury text-3xl sm:text-4xl font-bold text-white">Cinematic Stories</h2>
-            <div className="w-24 h-[1px] bg-[#D4AF37] mx-auto" />
+            <span className="font-serif-luxury italic text-gold text-sm uppercase tracking-widest">Cinematography reels</span>
+            <h2 className="font-serif-luxury text-3xl sm:text-4xl font-bold text-charcoal">Cinematic Stories</h2>
+            <div className="w-24 h-[1px] bg-gold mx-auto" />
           </div>
 
           {videos.length > 0 ? (
@@ -521,8 +504,8 @@ Please review my request and let me know the payment details. Thank you!`;
                 } catch {}
 
                 return (
-                  <div key={v._id} className="overflow-hidden rounded-xl border border-gray-800 bg-[#121113] p-3 shadow-soft hover:border-[#D4AF37] transition duration-300">
-                    <div className="aspect-video overflow-hidden rounded-lg bg-gray-900">
+                  <div key={v._id} className="p-3 shadow-md hover:border-gold transition duration-300 border border-taupe/20 luxury-card">
+                    <div className="aspect-video overflow-hidden rounded-[12px] bg-gray-900">
                       {embedId ? (
                         <iframe
                           className="w-full h-full"
@@ -536,26 +519,29 @@ Please review my request and let me know the payment details. Thank you!`;
                       )}
                     </div>
                     <div className="mt-3 px-1">
-                      <h3 className="text-sm font-bold text-white truncate">{v.title || 'Cinematography Reel'}</h3>
+                      <h3 className="text-sm font-bold text-charcoal truncate">{v.title || 'Cinematography Reel'}</h3>
+                      {v.description && (
+                        <p className="mt-1 text-xs text-charcoal/70 font-light line-clamp-2">{v.description}</p>
+                      )}
                     </div>
                   </div>
                 );
               })}
             </div>
           ) : (
-            <p className="text-center text-gray-400 font-light">Loading dynamic video links...</p>
+            <p className="text-center text-charcoal/50 font-light">Loading dynamic video links...</p>
           )}
         </div>
       </section>
 
       {/* Packages Pricing Section */}
-      <section id="packages" className="py-20 border-b border-[#D4AF37]/10 bg-[#121113]">
+      <section id="packages" className="py-20 border-b border-taupe/20 bg-cream">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl mx-auto space-y-4 mb-16 text-center">
-            <span className="font-serif-luxury italic text-[#D4AF37] text-sm uppercase tracking-widest">Pricing offerings</span>
-            <h2 className="font-serif-luxury text-3xl sm:text-4xl font-bold text-white">Investment Tiers</h2>
-            <div className="w-24 h-[1px] bg-[#D4AF37] mx-auto" />
-            <p className="text-sm text-gray-400 font-light">
+            <span className="font-serif-luxury italic text-gold text-sm uppercase tracking-widest">Pricing offerings</span>
+            <h2 className="font-serif-luxury text-3xl sm:text-4xl font-bold text-charcoal">Investment Tiers</h2>
+            <div className="w-24 h-[1px] bg-gold mx-auto" />
+            <p className="text-sm text-charcoal/70 font-light">
               Choose the perfect package to preserve your legacy. 20% advance booking secures your slot.
             </p>
           </div>
@@ -565,23 +551,23 @@ Please review my request and let me know the payment details. Thank you!`;
               packages.map((p) => (
                 <div
                   key={p._id}
-                  className="flex flex-col rounded-xl border border-gray-800 bg-[#0B0A0C] p-6 hover:border-[#D4AF37] hover:shadow-2xl transition duration-300"
+                  className="flex flex-col p-6 hover:border-gold transition duration-300 border border-taupe/20 luxury-card"
                 >
-                  <div className="border-b border-gray-800 pb-5">
-                    <span className="text-[10px] text-[#D4AF37] font-semibold uppercase tracking-wider bg-[#D4AF37]/10 px-2 py-0.5 rounded">
+                  <div className="border-b border-taupe/20 pb-5">
+                    <span className="text-[10px] text-gold font-semibold uppercase tracking-wider bg-gold/10 px-2 py-0.5 rounded">
                       {p.category}
                     </span>
-                    <h3 className="text-xl font-bold text-white mt-3 font-serif-luxury">{p.title}</h3>
+                    <h3 className="text-xl font-bold text-charcoal mt-3 font-serif-luxury">{p.title}</h3>
                     <div className="mt-4 flex items-baseline gap-1">
-                      <span className="text-3xl font-bold text-white">{money(p.price)}</span>
-                      {p.duration && <span className="text-xs text-gray-400">/ {p.duration}</span>}
+                      <span className="text-3xl font-bold text-charcoal">{money(p.price)}</span>
+                      {p.duration && <span className="text-xs text-charcoal/60">/ {p.duration}</span>}
                     </div>
                   </div>
 
                   <ul className="my-6 space-y-3 flex-1">
                     {(p.features || []).map((f, i) => (
-                      <li key={i} className="flex items-start gap-2.5 text-xs text-gray-300 font-light">
-                        <span className="text-[#D4AF37] shrink-0 mt-0.5">✓</span>
+                      <li key={i} className="flex items-start gap-2.5 text-xs text-charcoal/80 font-light">
+                        <span className="text-gold shrink-0 mt-0.5">✓</span>
                         <span>{f}</span>
                       </li>
                     ))}
@@ -592,164 +578,121 @@ Please review my request and let me know the payment details. Thank you!`;
                       setBookingForm(f => ({ ...f, packageId: p._id }));
                       scrollTo('contact');
                     }}
-                    className="w-full border border-[#D4AF37] hover:gold-bg-gradient hover:text-[#0B0A0C] text-[#D4AF37] font-bold text-xs py-3 rounded-lg uppercase tracking-wider transition text-center"
+                    className="w-full border border-gold hover:gold-bg-gradient hover:text-[#0B0A0C] text-gold font-bold text-xs py-3 rounded-[12px] uppercase tracking-wider transition text-center luxury-button"
                   >
                     Select Package
                   </button>
                 </div>
               ))
             ) : (
-              <p className="col-span-3 text-center text-gray-400 font-light">Loading available packages...</p>
+              <p className="col-span-3 text-center text-charcoal/50 font-light">Loading available packages...</p>
             )}
           </div>
         </div>
       </section>
 
       {/* Testimonials / Reviews Section */}
-      <section className="py-20 border-b border-[#D4AF37]/10 bg-[#0B0A0C]">
+      <section className="py-20 border-b border-taupe/20 bg-cream">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl mx-auto space-y-4 mb-16 text-center">
-            <span className="font-serif-luxury italic text-[#D4AF37] text-sm uppercase tracking-widest">Client Feedback</span>
-            <h2 className="font-serif-luxury text-3xl sm:text-4xl font-bold text-white">Love Notes</h2>
-            <div className="w-24 h-[1px] bg-[#D4AF37] mx-auto" />
+            <span className="font-serif-luxury italic text-gold text-sm uppercase tracking-widest">Client Feedback</span>
+            <h2 className="font-serif-luxury text-3xl sm:text-4xl font-bold text-charcoal">Love Notes</h2>
+            <div className="w-24 h-[1px] bg-gold mx-auto" />
           </div>
 
           {testimonials.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {testimonials.map((t) => (
-                <div key={t._id} className="rounded-xl border border-gray-800 bg-[#121113] p-6 flex flex-col justify-between shadow-lg">
+                <div key={t._id} className="p-6 flex flex-col justify-between shadow-md border border-taupe/20 luxury-card">
                   <div className="space-y-4">
                     <div className="flex gap-0.5 text-amber-500">
                       {[...Array(t.rating || 5)].map((_, i) => (
                         <Star key={i} className="h-4 w-4 fill-amber-500" />
                       ))}
                     </div>
-                    <p className="text-gray-300 font-light italic leading-relaxed text-sm">
+                    <p className="text-charcoal/80 font-light italic leading-relaxed text-sm">
                       “{t.body}”
                     </p>
                   </div>
-                  <div className="mt-6 flex items-center gap-3 border-t border-gray-800 pt-4">
+                  <div className="mt-6 flex items-center gap-3 border-t border-taupe/20 pt-4">
                     {t.avatar ? (
-                      <img src={t.avatar} alt="" className="h-10 w-10 rounded-full object-cover border border-gray-700 bg-gray-900" />
+                      <img src={t.avatar} alt="" className="h-10 w-10 rounded-full object-cover border border-taupe/20 bg-cream" />
                     ) : (
-                      <div className="grid h-10 w-10 place-items-center rounded-full bg-gray-800 text-[#D4AF37] font-bold text-sm border border-gray-700">
+                      <div className="grid h-10 w-10 place-items-center rounded-full bg-cream text-gold font-bold text-sm border border-taupe/20">
                         {t.authorName?.[0] || '?'}
                       </div>
                     )}
                     <div>
-                      <h4 className="text-sm font-bold text-white">{t.authorName}</h4>
-                      <p className="text-xs text-gray-500">{t.role || 'Client'}</p>
+                      <h4 className="text-sm font-bold text-charcoal">{t.authorName}</h4>
+                      <p className="text-xs text-charcoal/50">{t.role || 'Client'}</p>
                     </div>
                   </div>
                 </div>
               ))}
             </div>
           ) : (
-            <p className="text-center text-gray-400 font-light">Reading our client comments...</p>
+            <p className="text-center text-charcoal/50 font-light">Reading our client comments...</p>
           )}
         </div>
       </section>
 
-      {/* Blogs / News Grid Section */}
-      <section id="blog" className="py-20 border-b border-[#D4AF37]/10 bg-[#121113]">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="max-w-2xl mx-auto space-y-4 mb-16 text-center">
-            <span className="font-serif-luxury italic text-[#D4AF37] text-sm uppercase tracking-widest">Stories & Tips</span>
-            <h2 className="font-serif-luxury text-3xl sm:text-4xl font-bold text-white">Our Journal</h2>
-            <div className="w-24 h-[1px] bg-[#D4AF37] mx-auto" />
-          </div>
 
-          {blogs.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {blogs.map((b) => (
-                <div key={b._id} className="flex flex-col rounded-xl overflow-hidden border border-gray-800 bg-[#0B0A0C] shadow-lg group">
-                  {b.coverImage && (
-                    <div className="aspect-[16/10] overflow-hidden bg-gray-900">
-                      <img
-                        src={b.coverImage}
-                        alt=""
-                        className="h-full w-full object-cover group-hover:scale-102 transition duration-300"
-                      />
-                    </div>
-                  )}
-                  <div className="p-5 flex-1 flex flex-col justify-between space-y-3">
-                    <div className="space-y-2">
-                      <span className="text-[10px] font-semibold text-[#D4AF37] uppercase tracking-wider">
-                        {new Date(b.publishedAt || b.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
-                      </span>
-                      <h3 className="text-base font-bold text-white group-hover:text-[#D4AF37] transition font-serif-luxury line-clamp-2">
-                        {b.title}
-                      </h3>
-                      {b.excerpt && <p className="text-xs font-light text-gray-400 line-clamp-3">{b.excerpt}</p>}
-                    </div>
-                    <Link to={`/blog/${b._id}`} className="inline-flex items-center gap-1.5 text-xs font-bold text-[#D4AF37] hover:underline uppercase tracking-wider pt-2">
-                      Read Article <ArrowRight className="h-3 w-3" />
-                    </Link>
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <p className="text-center text-gray-400 font-light">Loading dynamic blog entries...</p>
-          )}
-        </div>
-      </section>
 
       {/* Booking Form & Contact Us Section */}
-      <section id="contact" className="py-20 border-b border-[#D4AF37]/10 bg-[#0B0A0C]">
+      <section id="contact" className="py-20 border-b border-taupe/20 bg-cream">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
             {/* Contact Details Side */}
             <div className="lg:col-span-2 space-y-8">
               <div>
-                <span className="font-serif-luxury italic text-[#D4AF37] text-sm uppercase tracking-widest">Connect With Us</span>
-                <h2 className="font-serif-luxury text-3xl sm:text-4xl font-bold text-white mt-1">Get in Touch</h2>
-                <div className="w-16 h-[1px] bg-[#D4AF37] mt-4" />
+                <span className="font-serif-luxury italic text-gold text-sm uppercase tracking-widest">Connect With Us</span>
+                <h2 className="font-serif-luxury text-3xl sm:text-4xl font-bold text-charcoal mt-1">Get in Touch</h2>
+                <div className="w-16 h-[1px] bg-gold mt-4" />
               </div>
 
               <div className="space-y-6">
                 <div className="flex gap-4 items-start">
-                  <div className="grid h-10 w-10 place-items-center rounded-lg bg-gray-900 border border-gray-800 text-[#D4AF37] shrink-0">
+                  <div className="grid h-10 w-10 place-items-center rounded-[12px] bg-cream border border-taupe/20 text-gold shrink-0">
                     <MapPin className="h-5 w-5" />
                   </div>
                   <div>
-                    <h4 className="text-sm font-bold text-white">Our Studio</h4>
-                    <p className="mt-1 text-sm font-light text-gray-400">{settings.contact_address}</p>
+                    <h4 className="text-sm font-bold text-charcoal">Our Studio</h4>
+                    <p className="mt-1 text-sm font-light text-charcoal/70">{settings.contact_address}</p>
                   </div>
                 </div>
 
                 <div className="flex gap-4 items-start">
-                  <div className="grid h-10 w-10 place-items-center rounded-lg bg-gray-900 border border-gray-800 text-[#D4AF37] shrink-0">
+                  <div className="grid h-10 w-10 place-items-center rounded-[12px] bg-cream border border-taupe/20 text-gold shrink-0">
                     <Mail className="h-5 w-5" />
                   </div>
                   <div>
-                    <h4 className="text-sm font-bold text-white">Email Us</h4>
-                    <p className="mt-1 text-sm font-light text-gray-400">{settings.contact_email}</p>
+                    <h4 className="text-sm font-bold text-charcoal">Email Us</h4>
+                    <p className="mt-1 text-sm font-light text-charcoal/70">{settings.contact_email}</p>
                   </div>
                 </div>
 
                 <div className="flex gap-4 items-start">
-                  <div className="grid h-10 w-10 place-items-center rounded-lg bg-gray-900 border border-gray-800 text-[#D4AF37] shrink-0">
+                  <div className="grid h-10 w-10 place-items-center rounded-[12px] bg-cream border border-taupe/20 text-gold shrink-0">
                     <Phone className="h-5 w-5" />
                   </div>
                   <div>
-                    <h4 className="text-sm font-bold text-white">Call Helpline</h4>
-                    <p className="mt-1 text-sm font-light text-gray-400">{settings.contact_phone}</p>
+                    <h4 className="text-sm font-bold text-charcoal">Call Helpline</h4>
+                    <p className="mt-1 text-sm font-light text-charcoal/70">{settings.contact_phone}</p>
                   </div>
                 </div>
               </div>
 
               {/* Social links */}
               <div className="space-y-3 pt-4">
-                <h4 className="text-xs font-semibold text-gray-400 uppercase tracking-widest">Follow Our Journey</h4>
+                <h4 className="text-xs font-semibold text-charcoal/50 uppercase tracking-widest">Follow Our Journey</h4>
                 <div className="flex gap-3">
-                  <a href={settings.facebook_url} target="_blank" rel="noopener noreferrer" className="grid h-10 w-10 place-items-center rounded-lg bg-gray-900 border border-gray-800 hover:border-[#D4AF37] hover:text-[#D4AF37] transition text-gray-300">
+                  <a href={settings.facebook_url} target="_blank" rel="noopener noreferrer" className="grid h-10 w-10 place-items-center rounded-[12px] bg-cream border border-taupe/20 hover:border-gold hover:text-gold transition text-charcoal/75 luxury-button">
                     <Facebook className="h-5 w-5" />
                   </a>
-                  <a href={settings.instagram_url} target="_blank" rel="noopener noreferrer" className="grid h-10 w-10 place-items-center rounded-lg bg-gray-900 border border-gray-800 hover:border-[#D4AF37] hover:text-[#D4AF37] transition text-gray-300">
+                  <a href={settings.instagram_url} target="_blank" rel="noopener noreferrer" className="grid h-10 w-10 place-items-center rounded-[12px] bg-cream border border-taupe/20 hover:border-gold hover:text-gold transition text-charcoal/75 luxury-button">
                     <Instagram className="h-5 w-5" />
                   </a>
-                  <a href={settings.youtube_url} target="_blank" rel="noopener noreferrer" className="grid h-10 w-10 place-items-center rounded-lg bg-gray-900 border border-gray-800 hover:border-[#D4AF37] hover:text-[#D4AF37] transition text-gray-300">
+                  <a href={settings.youtube_url} target="_blank" rel="noopener noreferrer" className="grid h-10 w-10 place-items-center rounded-[12px] bg-cream border border-taupe/20 hover:border-gold hover:text-gold transition text-charcoal/75 luxury-button">
                     <Youtube className="h-5 w-5" />
                   </a>
                 </div>
@@ -759,31 +702,31 @@ Please review my request and let me know the payment details. Thank you!`;
             {/* Booking Form Side */}
             <div className="lg:col-span-3">
               {bookingSuccess ? (
-                <div className="rounded-xl border border-emerald-950 bg-emerald-950/20 p-6 space-y-6 text-sm">
+                <div className="rounded-[24px] border border-emerald-950/20 bg-emerald-950/5 p-6 space-y-6 text-sm text-charcoal">
                   <div className="flex items-center gap-3">
-                    <div className="grid h-12 w-12 place-items-center rounded-full bg-emerald-500/20 text-emerald-400">
+                    <div className="grid h-12 w-12 place-items-center rounded-full bg-emerald-500/20 text-emerald-600">
                       <Clock className="h-6 w-6 animate-pulse" />
                     </div>
                     <div>
-                      <h3 className="text-lg font-bold text-white">Booking Saved in Dashboard</h3>
-                      <p className="text-xs text-gray-400 font-light">Reference: <span className="font-mono">{bookingSuccess._id}</span></p>
+                      <h3 className="text-lg font-bold text-charcoal">Booking Request Submitted</h3>
+                      <p className="text-xs text-charcoal/50 font-light">Reference: <span className="font-mono">{bookingSuccess._id}</span></p>
                     </div>
                   </div>
 
-                  <div className="rounded-lg bg-black/40 p-4 border border-gray-800">
-                    <h4 className="font-semibold text-white uppercase tracking-wider text-xs border-b border-gray-800 pb-2 mb-3">
+                  <div className="rounded-[12px] bg-cream p-4 border border-taupe/20">
+                    <h4 className="font-semibold text-charcoal uppercase tracking-wider text-xs border-b border-taupe/20 pb-2 mb-3">
                       Booking Summary
                     </h4>
-                    <div className="space-y-1.5 text-xs text-gray-300">
+                    <div className="space-y-1.5 text-xs text-charcoal/80">
                       <div className="flex justify-between">
                         <span>Total Cost</span>
-                        <span className="font-semibold text-white">{money(selectedPackageDetails?.price)}</span>
+                        <span className="font-semibold text-charcoal">{money(selectedPackageDetails?.price)}</span>
                       </div>
-                      <div className="flex justify-between border-t border-gray-800/40 pt-1.5 text-[#D4AF37]">
+                      <div className="flex justify-between border-t border-taupe/20 pt-1.5 text-gold">
                         <span>Advance Required (20%)</span>
                         <span className="font-bold">{money(Math.round((selectedPackageDetails?.price || 0) * 0.2))}</span>
                       </div>
-                      <div className="flex justify-between text-gray-400">
+                      <div className="flex justify-between text-charcoal/60">
                         <span>Balance at Event</span>
                         <span>{money((selectedPackageDetails?.price || 0) - Math.round((selectedPackageDetails?.price || 0) * 0.2))}</span>
                       </div>
@@ -799,7 +742,7 @@ Please review my request and let me know the payment details. Thank you!`;
                       <button
                         type="button"
                         onClick={sendToWhatsapp}
-                        className="flex-1 flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20ba56] text-[#0B0A0C] font-bold py-3 rounded-lg uppercase tracking-wider transition"
+                        className="flex-1 flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20ba56] text-[#0B0A0C] font-bold py-3 rounded-[12px] uppercase tracking-wider transition luxury-button"
                       >
                         <Send className="h-4 w-4" /> Send details to WhatsApp
                       </button>
@@ -817,7 +760,7 @@ Please review my request and let me know the payment details. Thank you!`;
                             notes: '',
                           });
                         }}
-                        className="border border-gray-700 hover:border-gray-500 text-white font-bold py-3 px-6 rounded-lg uppercase tracking-wider transition"
+                        className="border border-taupe/20 hover:border-taupe/40 text-charcoal font-bold py-3 px-6 rounded-[12px] uppercase tracking-wider transition luxury-button"
                       >
                         New Booking
                       </button>
@@ -825,19 +768,19 @@ Please review my request and let me know the payment details. Thank you!`;
                   </div>
                 </div>
               ) : (
-                <form onSubmit={handleBookingSubmit} className="space-y-4 rounded-xl border border-gray-800 bg-[#121113] p-6 shadow-2xl">
-                  <h3 className="font-serif-luxury text-xl font-bold text-white border-b border-gray-800 pb-3 mb-6">
+                <form onSubmit={handleBookingSubmit} className="space-y-4 p-6 shadow-2xl luxury-card">
+                  <h3 className="font-serif-luxury text-xl font-bold text-charcoal border-b border-taupe/20 pb-3 mb-6">
                     Online Booking Request
                   </h3>
 
                   {bookingError && (
-                    <div className="rounded bg-red-950/20 border border-red-900/50 px-3 py-2 text-xs text-red-400">{bookingError}</div>
+                    <div className="rounded bg-red-950/5 border border-red-900/25 px-3 py-2 text-xs text-red-600">{bookingError}</div>
                   )}
 
                   <div>
-                    <label className="mb-1 block text-xs font-semibold text-gray-400 uppercase tracking-wider">Select Package</label>
+                    <label className="mb-1 block text-xs font-semibold text-charcoal/60 uppercase tracking-wider">Select Package</label>
                     <select
-                      className="w-full rounded-lg border border-gray-800 bg-gray-900 px-3 py-3 text-sm text-white focus:border-[#D4AF37] focus:outline-none"
+                      className="w-full rounded-[12px] border border-taupe/20 bg-cream px-3 py-3 text-sm text-charcoal focus:border-gold focus:outline-none"
                       value={bookingForm.packageId}
                       onChange={(e) => setBookingForm(f => ({ ...f, packageId: e.target.value }))}
                       required
@@ -851,10 +794,10 @@ Please review my request and let me know the payment details. Thank you!`;
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="mb-1 block text-xs font-semibold text-gray-400 uppercase tracking-wider">Event Date</label>
+                      <label className="mb-1 block text-xs font-semibold text-charcoal/60 uppercase tracking-wider">Event Date</label>
                       <input
                         type="date"
-                        className="w-full rounded-lg border border-gray-800 bg-gray-900 px-3 py-3 text-sm text-white focus:border-[#D4AF37] focus:outline-none"
+                        className="w-full rounded-[12px] border border-taupe/20 bg-cream px-3 py-3 text-sm text-charcoal focus:border-gold focus:outline-none"
                         value={bookingForm.eventDate}
                         min={todayISO()}
                         onChange={(e) => setBookingForm(f => ({ ...f, eventDate: e.target.value }))}
@@ -862,11 +805,11 @@ Please review my request and let me know the payment details. Thank you!`;
                       />
                     </div>
                     <div>
-                      <label className="mb-1 block text-xs font-semibold text-gray-400 uppercase tracking-wider">Estimated Guests</label>
+                      <label className="mb-1 block text-xs font-semibold text-charcoal/60 uppercase tracking-wider">Estimated Guests</label>
                       <input
                         type="number"
                         min={1}
-                        className="w-full rounded-lg border border-gray-800 bg-gray-900 px-3 py-3 text-sm text-white focus:border-[#D4AF37] focus:outline-none"
+                        className="w-full rounded-[12px] border border-taupe/20 bg-cream px-3 py-3 text-sm text-charcoal focus:border-gold focus:outline-none"
                         value={bookingForm.guests}
                         onChange={(e) => setBookingForm(f => ({ ...f, guests: Number(e.target.value) || 100 }))}
                       />
@@ -874,10 +817,10 @@ Please review my request and let me know the payment details. Thank you!`;
                   </div>
 
                   <div>
-                    <label className="mb-1 block text-xs font-semibold text-gray-400 uppercase tracking-wider">Venue Location</label>
+                    <label className="mb-1 block text-xs font-semibold text-charcoal/60 uppercase tracking-wider">Venue Location</label>
                     <input
                       type="text"
-                      className="w-full rounded-lg border border-gray-800 bg-gray-900 px-3 py-3 text-sm text-white focus:border-[#D4AF37] focus:outline-none"
+                      className="w-full rounded-[12px] border border-taupe/20 bg-cream px-3 py-3 text-sm text-charcoal focus:border-gold focus:outline-none"
                       placeholder="e.g. Sena Malancha, Dhaka Cantt."
                       value={bookingForm.venue}
                       onChange={(e) => setBookingForm(f => ({ ...f, venue: e.target.value }))}
@@ -887,10 +830,10 @@ Please review my request and let me know the payment details. Thank you!`;
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="mb-1 block text-xs font-semibold text-gray-400 uppercase tracking-wider">Contact Phone</label>
+                      <label className="mb-1 block text-xs font-semibold text-charcoal/60 uppercase tracking-wider">Contact Phone</label>
                       <input
                         type="tel"
-                        className="w-full rounded-lg border border-gray-800 bg-gray-900 px-3 py-3 text-sm text-white focus:border-[#D4AF37] focus:outline-none"
+                        className="w-full rounded-[12px] border border-taupe/20 bg-cream px-3 py-3 text-sm text-charcoal focus:border-gold focus:outline-none"
                         placeholder="e.g. +8801712345678"
                         value={bookingForm.contactPhone}
                         onChange={(e) => setBookingForm(f => ({ ...f, contactPhone: e.target.value }))}
@@ -898,10 +841,10 @@ Please review my request and let me know the payment details. Thank you!`;
                       />
                     </div>
                     <div>
-                      <label className="mb-1 block text-xs font-semibold text-gray-400 uppercase tracking-wider">Contact Email (Optional)</label>
+                      <label className="mb-1 block text-xs font-semibold text-charcoal/60 uppercase tracking-wider">Contact Email (Optional)</label>
                       <input
                         type="email"
-                        className="w-full rounded-lg border border-gray-800 bg-gray-900 px-3 py-3 text-sm text-white focus:border-[#D4AF37] focus:outline-none"
+                        className="w-full rounded-[12px] border border-taupe/20 bg-cream px-3 py-3 text-sm text-charcoal focus:border-gold focus:outline-none"
                         placeholder="customer@example.com"
                         value={bookingForm.contactEmail}
                         onChange={(e) => setBookingForm(f => ({ ...f, contactEmail: e.target.value }))}
@@ -910,10 +853,10 @@ Please review my request and let me know the payment details. Thank you!`;
                   </div>
 
                   <div>
-                    <label className="mb-1 block text-xs font-semibold text-gray-400 uppercase tracking-wider">Notes & Special Directions</label>
+                    <label className="mb-1 block text-xs font-semibold text-charcoal/60 uppercase tracking-wider">Notes & Special Directions</label>
                     <textarea
                       rows={3}
-                      className="w-full rounded-lg border border-gray-800 bg-gray-900 px-3 py-3 text-sm text-white focus:border-[#D4AF37] focus:outline-none"
+                      className="w-full rounded-[12px] border border-taupe/20 bg-cream px-3 py-3 text-sm text-charcoal focus:border-gold focus:outline-none"
                       placeholder="Theme preferences, cinematography requirements, details..."
                       value={bookingForm.notes}
                       onChange={(e) => setBookingForm(f => ({ ...f, notes: e.target.value }))}
@@ -921,12 +864,12 @@ Please review my request and let me know the payment details. Thank you!`;
                   </div>
 
                   {selectedPackageDetails && (
-                    <div className="rounded-lg bg-black/40 p-4 border border-gray-800 text-xs space-y-1">
+                    <div className="rounded-[12px] bg-cream p-4 border border-taupe/20 text-xs space-y-1">
                       <div className="flex justify-between">
                         <span>Total Pricing:</span>
-                        <span className="font-semibold text-white">{money(selectedPackageDetails.price)}</span>
+                        <span className="font-semibold text-charcoal">{money(selectedPackageDetails.price)}</span>
                       </div>
-                      <div className="flex justify-between text-[#D4AF37]">
+                      <div className="flex justify-between text-gold">
                         <span>Advance Required (20%):</span>
                         <span className="font-bold">{money(Math.round(selectedPackageDetails.price * 0.2))}</span>
                       </div>
@@ -936,7 +879,7 @@ Please review my request and let me know the payment details. Thank you!`;
                   <button
                     type="submit"
                     disabled={bookingBusy || !bookingForm.packageId}
-                    className="w-full gold-bg-gradient py-3.5 rounded-lg text-[#0B0A0C] font-bold text-xs uppercase tracking-wider transition hover:opacity-95 disabled:opacity-50"
+                    className="w-full gold-bg-gradient py-3.5 rounded-[12px] text-[#0B0A0C] font-bold text-xs uppercase tracking-wider transition disabled:opacity-50 luxury-button"
                   >
                     {bookingBusy ? 'Saving request…' : 'Submit Booking Request'}
                   </button>
@@ -948,27 +891,27 @@ Please review my request and let me know the payment details. Thank you!`;
       </section>
 
       {/* Footer */}
-      <footer className="py-12 bg-[#0B0A0C] border-t border-gray-900 text-gray-400 text-sm">
+      <footer className="py-12 bg-cream border-t border-taupe/20 text-charcoal/70 text-sm">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-3 cursor-pointer" onClick={() => scrollTo('home')}>
             <Logo size={36} />
-            <span className="font-serif-luxury text-lg font-bold tracking-widest text-white uppercase">
-              CHRONOS <span className="text-[#D4AF37]">MOMENTS</span>
+            <span className="font-serif-luxury text-lg font-bold tracking-widest text-charcoal uppercase">
+              CHRONOS <span className="text-gold">MOMENTS</span>
             </span>
           </div>
 
-          <p className="text-xs text-gray-500 font-light text-center md:text-left">
+          <p className="text-xs text-charcoal/50 font-light text-center md:text-left">
             © 2026 Chronos Moments. All Rights Reserved. Capture your forever.
           </p>
 
           <div className="flex gap-4">
-            <a href={settings.facebook_url} target="_blank" rel="noopener noreferrer" className="hover:text-[#D4AF37] transition text-gray-500">
+            <a href={settings.facebook_url} target="_blank" rel="noopener noreferrer" className="hover:text-gold transition text-charcoal/50">
               <Facebook className="h-4 w-4" />
             </a>
-            <a href={settings.instagram_url} target="_blank" rel="noopener noreferrer" className="hover:text-[#D4AF37] transition text-gray-500">
+            <a href={settings.instagram_url} target="_blank" rel="noopener noreferrer" className="hover:text-gold transition text-charcoal/50">
               <Instagram className="h-4 w-4" />
             </a>
-            <a href={settings.youtube_url} target="_blank" rel="noopener noreferrer" className="hover:text-[#D4AF37] transition text-gray-500">
+            <a href={settings.youtube_url} target="_blank" rel="noopener noreferrer" className="hover:text-gold transition text-charcoal/50">
               <Youtube className="h-4 w-4" />
             </a>
           </div>

@@ -1,3 +1,4 @@
+@import './portfolio/styles.css';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -28,7 +29,7 @@
 
   /* Luxury Theme Extensions */
   .font-serif-luxury {
-    font-family: 'Playfair Display', Georgia, serif;
+    font-family: 'Cabinet Grotesk', sans-serif;
   }
 
   .gold-text-gradient {
@@ -43,5 +44,35 @@
 
   .gold-border-gradient {
     border-image: linear-gradient(135deg, #BF953F 0%, #FCF6BA 25%, #B38728 50%, #FBF5B7 75%, #AA771C 100%) 1;
+  }
+
+  /* Luxury Theme Adjustments */
+  .luxury-card {
+    border-radius: 24px;
+    border: 1px solid rgba(139, 125, 107, 0.2); /* 20% opacity of Warm Taupe */
+    background-color: #FDFCF9;
+  }
+
+  .luxury-button {
+    border-radius: 12px;
+    transition: all 300ms ease-in-out;
+  }
+
+  .luxury-button:hover {
+    opacity: 0.9;
+    transform: scale(1.02);
+  }
+
+  .luxury-image-card {
+    overflow: hidden;
+    border-radius: 24px;
+  }
+
+  .luxury-image-card img {
+    transition: transform 500ms ease-in-out;
+  }
+
+  .luxury-image-card:hover img {
+    transform: scale(1.05);
   }
 }

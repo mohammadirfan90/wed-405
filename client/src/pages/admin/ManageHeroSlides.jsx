@@ -17,7 +17,9 @@ export default function ManageHeroSlides() {
   const [flash, setFlash] = useState(null);
 
   const load = () => api.get('/hero/admin/all').then(({ data }) => setItems(data));
-  useEffect(load, []);
+  useEffect(() => {
+    load();
+  }, []);
 
   function startEdit(s) {
     setEditing(s);

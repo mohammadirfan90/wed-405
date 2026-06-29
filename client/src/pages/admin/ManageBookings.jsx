@@ -15,7 +15,9 @@ export default function ManageBookings() {
       .then(({ data }) => setBookings(data))
       .finally(() => setLoading(false));
   };
-  useEffect(load, [filter]);
+  useEffect(() => {
+    load();
+  }, [filter]);
 
   async function update(id, status) {
     await api.patch(`/bookings/${id}`, { status });

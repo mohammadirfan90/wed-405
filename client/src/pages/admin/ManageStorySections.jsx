@@ -16,8 +16,10 @@ export default function ManageStorySections() {
   const [busy, setBusy] = useState(false);
   const [flash, setFlash] = useState(null);
 
-  const load = () => api.get('/story/admin/all').then(({ data }) => setItems(data));
-  useEffect(load, []);
+  const load = () => api.get('/content/admin/all?section=story').then(({ data }) => setItems(data));
+  useEffect(() => {
+    load();
+  }, []);
 
   function startEdit(s) {
     setEditing(s);
@@ -45,8 +47,8 @@ export default function ManageStorySections() {
       order: Number(form.order) || 0,
     };
     try {
-      if (editing) await api.put(`/story/${editing._id}`, payload);
-      else await api.post('/story', payload);
+      if (editing) await api.put(`/content/${editing._id}`, payload);
+      else await api.post('/content?section=story', payload);
       setFlash({ type: 'ok', text: editing ? 'Story section updated' : 'Story section created' });
       reset();
       load();
@@ -59,7 +61,7 @@ export default function ManageStorySections() {
 
   async function remove(s) {
     if (!confirm('Delete this story section? This cannot be undone.')) return;
-    await api.delete(`/story/${s._id}`);
+    await api.delete(`/content/${s._id}`);
     load();
   }
 

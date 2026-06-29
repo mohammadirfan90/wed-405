@@ -29,9 +29,12 @@ export function AuthProvider({ children }) {
     fetchMe();
   }, [fetchMe]);
 
-  const login = useCallback(async (phone, password) => {
+  const login = useCallback(async (phoneOrPayload, password) => {
     setError(null);
-    const { data } = await api.post('/auth/login', { phone, password });
+    const payload = typeof phoneOrPayload === 'object' && phoneOrPayload !== null
+      ? phoneOrPayload
+      : { phone: phoneOrPayload, password };
+    const { data } = await api.post('/auth/login', payload);
     persistToken(data.token);
     setUser(data.user);
     return data.user;

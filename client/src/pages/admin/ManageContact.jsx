@@ -20,7 +20,9 @@ export default function ManageContact() {
   const [flash, setFlash] = useState(null);
 
   const load = () => api.get('/contact').then(({ data }) => setItems(data));
-  useEffect(load, []);
+  useEffect(() => {
+    load();
+  }, []);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -36,7 +38,7 @@ export default function ManageContact() {
   }, [items, filter, query]);
 
   async function setRead(m, isRead) {
-    await api.patch(`/contact/${m._id}`, { isRead });
+    await api.patch(`/contact/${m._id}/status`, { status: isRead ? 'read' : 'unread' });
     setFlash({ type: 'ok', text: isRead ? `Marked ${m.name} as read` : `Marked ${m.name} as unread` });
     load();
     if (active?._id === m._id) setActive((a) => ({ ...a, isRead, readAt: isRead ? new Date() : null }));

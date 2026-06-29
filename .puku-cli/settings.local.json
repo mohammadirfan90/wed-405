@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(wc:*)",
+      "Bash(head -5 server/src/models/*.js)",
+      "Bash(node -e \"const app = require\\(''''./src/app''''\\); const routes = []; app._router.stack.forEach\\(m => { if \\(m.name === ''''router'''' && m.handle && m.handle.stack\\) { m.handle.stack.forEach\\(r => { if \\(r.route\\) routes.push\\(Object.keys\\(r.route.methods\\)[0].toUpperCase\\(\\) + '''' '''' + m.regexp.toString\\(\\).match\\(/\\\\\\\\/api\\\\\\\\/[^\\\\]+/\\)?.[0]\\); }\\); } }\\); console.log\\(''''Routes:''''\\); routes.forEach\\(r => console.log\\(''''  '''' + r\\)\\);\")",
+      "Bash(node scripts/list-routes.js)",
+      "Bash(echo \"EXIT=$?\")",
+      "Bash(node -e \"console.log\\(''hello''\\)\")"
+    ]
+  }
+}

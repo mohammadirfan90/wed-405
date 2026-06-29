@@ -34,8 +34,10 @@ export default function ManagePortfolio() {
   const [busy, setBusy] = useState(false);
   const [flash, setFlash] = useState(null);
 
-  const load = () => api.get('/portfolio/admin/all').then(({ data }) => setItems(data));
-  useEffect(load, []);
+  const load = () => api.get('/gallery/admin/all').then(({ data }) => setItems(data));
+  useEffect(() => {
+    load();
+  }, []);
 
   function startEdit(p) {
     setEditing(p);
@@ -68,8 +70,8 @@ export default function ManagePortfolio() {
       images: form.images.split('\n').map((s) => s.trim()).filter(Boolean),
     };
     try {
-      if (editing) await api.put(`/portfolio/${editing._id}`, payload);
-      else await api.post('/portfolio', payload);
+      if (editing) await api.put(`/gallery/${editing._id}`, payload);
+      else await api.post('/gallery', payload);
       setFlash({ type: 'ok', text: editing ? 'Portfolio item updated' : 'Portfolio item created' });
       reset();
       load();
@@ -82,12 +84,12 @@ export default function ManagePortfolio() {
 
   async function remove(p) {
     if (!confirm(`Delete "${p.title}"? This cannot be undone.`)) return;
-    await api.delete(`/portfolio/${p._id}`);
+    await api.delete(`/gallery/${p._id}`);
     load();
   }
 
   async function togglePublished(p) {
-    await api.put(`/portfolio/${p._id}`, { isPublished: !p.isPublished });
+    await api.put(`/gallery/${p._id}`, { isPublished: !p.isPublished });
     load();
   }
 

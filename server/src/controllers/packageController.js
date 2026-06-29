@@ -10,8 +10,18 @@ function slugify(s) {
 
 // Public: list active packages
 const listPackages = asyncHandler(async (req, res) => {
-  const filter = { isActive: true };
-  if (req.query.category) filter.category = req.query.category;
+  const filter = {};
+
+  if (req.query.status) {
+    filter.isActive = req.query.status === 'active';
+  } else {
+    filter.isActive = true;
+  }
+
+  if (req.query.category) {
+    filter.category = { $regex: new RegExp(`^${req.query.category}$`, 'i') };
+  }
+
   const packages = await Package.find(filter).sort('-createdAt');
   res.json(packages);
 });

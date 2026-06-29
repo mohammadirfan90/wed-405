@@ -19,13 +19,22 @@ const adminListMessages = asyncHandler(async (req, res) => {
   res.json(messages);
 });
 
-// Admin: mark read/unread
-const updateMessage = asyncHandler(async (req, res) => {
-  const update = {};
-  if (typeof req.body.isRead === 'boolean') {
-    update.isRead = req.body.isRead;
-    update.readAt = req.body.isRead ? new Date() : null;
+// Admin: update message status
+const updateMessageStatus = asyncHandler(async (req, res) => {
+  const { status } = req.body;
+  if (!['unread', 'read', 'replied', 'archived'].includes(status)) {
+    return res.status(400).json({ message: 'Invalid status. Must be unread, read, replied, or archived' });
   }
+
+  const update = { status };
+  if (status === 'unread') {
+    update.isRead = false;
+    update.readAt = null;
+  } else {
+    update.isRead = true;
+    update.readAt = new Date();
+  }
+
   const doc = await ContactMessage.findByIdAndUpdate(req.params.id, update, { new: true });
   if (!doc) return res.status(404).json({ message: 'Message not found' });
   res.json(doc);
@@ -40,5 +49,7 @@ const deleteMessage = asyncHandler(async (req, res) => {
 
 module.exports = {
   createContactMessage,
-  adminListMessages, updateMessage, deleteMessage,
+  adminListMessages,
+  updateMessageStatus,
+  deleteMessage,
 };

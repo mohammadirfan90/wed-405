@@ -12,7 +12,9 @@ export default function ManagePackages() {
   const [busy, setBusy] = useState(false);
 
   const load = () => api.get('/packages/admin/all').then(({ data }) => setItems(data));
-  useEffect(load, []);
+  useEffect(() => {
+    load();
+  }, []);
 
   function startEdit(p) {
     setEditing(p);

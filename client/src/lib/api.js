@@ -18,14 +18,14 @@ api.interceptors.response.use(
     const status = err?.response?.status;
     const url = err?.config?.url || '';
     // Don't bounce users during the login or refresh flows
-    const isAuthCall = /\/auth\/(login|register|forgot|reset)/.test(url);
+    const isAuthCall = /\/auth\/(login|register|forgot|reset|me)/.test(url) || url.includes('change-password');
     if (status === 401 && !isAuthCall && !isRedirecting && typeof window !== 'undefined') {
       isRedirecting = true;
       localStorage.removeItem('cm_token');
       localStorage.removeItem('cm_user');
       const here = window.location.pathname + window.location.search;
-      if (!here.startsWith('/login') && !here.startsWith('/register')) {
-        window.location.replace('/login?from=' + encodeURIComponent(here));
+      if (!here.startsWith('/admin/login')) {
+        window.location.replace('/admin/login?from=' + encodeURIComponent(here));
       }
       setTimeout(() => { isRedirecting = false; }, 1500);
     }

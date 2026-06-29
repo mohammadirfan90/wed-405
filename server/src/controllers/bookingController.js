@@ -25,24 +25,6 @@ const createBooking = asyncHandler(async (req, res) => {
   res.status(201).json(booking);
 });
 
-// User: my bookings
-const myBookings = asyncHandler(async (req, res) => {
-  const bookings = await Booking.find({ user: req.user._id })
-    .populate('package', 'title price currency category coverImage')
-    .sort('-createdAt');
-  res.json(bookings);
-});
-
-// User: cancel own booking (only if pending)
-const cancelMyBooking = asyncHandler(async (req, res) => {
-  const b = await Booking.findOne({ _id: req.params.id, user: req.user._id });
-  if (!b) return res.status(404).json({ message: 'Booking not found' });
-  if (b.status !== 'pending') return res.status(400).json({ message: 'Only pending bookings can be cancelled' });
-  b.status = 'cancelled';
-  await b.save();
-  res.json(b);
-});
-
 // Admin: list all bookings
 const adminListBookings = asyncHandler(async (req, res) => {
   const filter = {};
@@ -65,6 +47,7 @@ const adminUpdateBooking = asyncHandler(async (req, res) => {
 });
 
 module.exports = {
-  createBooking, myBookings, cancelMyBooking,
-  adminListBookings, adminUpdateBooking,
+  createBooking,
+  adminListBookings,
+  adminUpdateBooking,
 };
