@@ -64,14 +64,14 @@ export default function AboutPage() {
           <p className="pf-eyebrow">A Letter</p>
           <p className="mt-8 pf-quote text-3xl sm:text-4xl md:text-5xl leading-tight">
             {story.headline ||
-              'We started Chronos in a tiny flat in Old Dhaka, with one camera and a borrowed lens.'}
+              'We started BiyeBuzz in a tiny flat in Old Dhaka, with one camera and a borrowed lens.'}
           </p>
           <div className="mt-10 space-y-5 text-lg text-carbon/85 leading-relaxed">
             {story.body && <p>{story.body}</p>}
             {!story.body && (
               <>
                 <p>
-                  The name is the Greek word for time. We chose it because weddings, like
+                  Our name is a nod to celebrating weddings. We chose it because weddings, like
                   photographs, are about choosing which seconds to keep. We make pictures for
                   the seconds you almost didn't notice — the light through a window, a hand
                   resting on a shoulder, the silence between two toasts.

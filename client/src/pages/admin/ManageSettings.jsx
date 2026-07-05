@@ -58,12 +58,12 @@ export default function ManageSettings() {
   return (
     <DashboardShell variant="admin" title="Manage Settings" searchPlaceholder="Search settings">
       <div className="max-w-2xl">
-        <h2 className="mb-2 text-xl font-semibold text-ink">Global Site Settings</h2>
-        <p className="mb-6 text-sm text-ink-muted">
+        <h2 className="mb-2 text-xl font-semibold text-charcoal">Global Site Settings</h2>
+        <p className="mb-6 text-sm text-charcoal/70">
           Update the global contacts, social links, and WhatsApp number used across the public landing page.
         </p>
 
-        <form onSubmit={submit} className="space-y-4 rounded-xl bg-white p-6 shadow-soft ring-1 ring-lav-200">
+        <form onSubmit={submit} className="space-y-4 rounded-xl bg-white p-6 shadow-soft ring-1 ring-taupe/20">
           {flash && (
             <p className={'rounded-md px-3 py-2 text-sm ' + (flash.type === 'ok' ? 'bg-emerald-50 text-emerald-800' : 'bg-red-50 text-red-700')}>
               {flash.text}

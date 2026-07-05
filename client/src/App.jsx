@@ -8,7 +8,6 @@ import AdminLogin from './pages/admin/AdminLogin.jsx';
 import ManagePackages from './pages/admin/ManagePackages.jsx';
 import ManageBookings from './pages/admin/ManageBookings.jsx';
 import ManagePortfolio from './pages/admin/ManagePortfolio.jsx';
-import ManageContact from './pages/admin/ManageContact.jsx';
 import ManageTestimonials from './pages/admin/ManageTestimonials.jsx';
 import ManageAdmins from './pages/admin/ManageAdmins.jsx';
 import ManageSettings from './pages/admin/ManageSettings.jsx';
@@ -63,14 +62,6 @@ export default function App() {
           element={
             <ProtectedRoute role="admin">
               <ManageAdmins />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/admin/contact"
-          element={
-            <ProtectedRoute role="admin">
-              <ManageContact />
             </ProtectedRoute>
           }
         />

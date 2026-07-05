@@ -12,16 +12,16 @@
 
 @layer components {
   .btn-primary {
-    @apply inline-flex w-full items-center justify-center rounded-lg bg-brand px-4 py-3
-           font-semibold text-white shadow-soft transition
-           hover:bg-brand-600 active:scale-[0.99]
-           focus:outline-none focus:ring-2 focus:ring-brand/60 focus:ring-offset-2 focus:ring-offset-lav-100
+    @apply inline-flex w-full items-center justify-center rounded-lg bg-charcoal px-4 py-3
+           font-semibold text-gold shadow-soft transition
+           hover:bg-charcoal/90 active:scale-[0.99]
+           focus:outline-none focus:ring-2 focus:ring-gold/60 focus:ring-offset-2 focus:ring-offset-cream
            disabled:opacity-60 disabled:cursor-not-allowed;
   }
   .input-field {
-    @apply w-full rounded-lg border border-lav-300 bg-white/80 px-3 py-3 text-ink
-           placeholder:text-ink-muted/70
-           focus:border-brand focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand/40;
+    @apply w-full rounded-lg border border-taupe/30 bg-white/80 px-3 py-3 text-charcoal
+           placeholder:text-charcoal/50
+           focus:border-gold focus:bg-white focus:outline-none focus:ring-2 focus:ring-gold/40;
   }
   .label {
     @apply mb-1 block text-sm font-semibold text-ink;

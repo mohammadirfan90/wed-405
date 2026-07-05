@@ -11,7 +11,7 @@ export default function Footer() {
         <div className="flex flex-wrap items-center justify-center gap-2 sm:justify-start">
           <Camera className="h-4 w-4 text-brand" />
           <span>
-            © 2026 <span className="font-semibold text-ink">Chronos Moments</span>. All rights reserved.
+            © 2026 <span className="font-semibold text-ink">BiyeBuzz.com</span>. All rights reserved.
           </span>
         </div>
         <p className="flex items-center gap-1 text-xs">

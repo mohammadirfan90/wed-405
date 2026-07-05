@@ -112,8 +112,8 @@ export default function ManageTestimonials() {
     <DashboardShell variant="admin" title="Testimonials" searchPlaceholder="Search testimonials">
       <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h2 className="text-xl font-semibold text-ink">Manage Testimonials</h2>
-          <p className="text-sm text-ink-muted">
+          <h2 className="text-xl font-semibold text-charcoal">Manage Testimonials</h2>
+          <p className="text-sm text-charcoal/70">
             {counts.total} total · {counts.pending} pending · {counts.approved} approved
           </p>
         </div>
@@ -124,7 +124,7 @@ export default function ManageTestimonials() {
               onClick={() => setFilter(s)}
               className={
                 'rounded-full px-3 py-1 text-xs font-semibold capitalize ' +
-                (filter === s ? 'bg-brand text-white' : 'bg-lav-100 text-ink hover:bg-lav-200')
+                (filter === s ? 'bg-charcoal text-gold' : 'bg-taupe/10 text-charcoal hover:bg-taupe/20')
               }
             >
               {s}
@@ -136,19 +136,19 @@ export default function ManageTestimonials() {
       <div className="grid gap-6 lg:grid-cols-[1fr_440px]">
         <div className="grid gap-3 md:grid-cols-2">
           {filtered.map((t) => (
-            <div key={t._id} className="rounded-xl bg-white p-5 shadow-soft ring-1 ring-lav-200">
+            <div key={t._id} className="rounded-xl bg-white p-5 shadow-soft ring-1 ring-taupe/20">
               <div className="mb-2 flex items-start justify-between">
                 <div className="flex items-center gap-3">
                   {t.avatar ? (
                     <img src={t.avatar} alt="" className="h-9 w-9 rounded-full object-cover" />
                   ) : (
-                    <div className="grid h-9 w-9 place-items-center rounded-full bg-lav-200 text-sm font-bold text-ink">
+                    <div className="grid h-9 w-9 place-items-center rounded-full bg-taupe/20 text-sm font-bold text-charcoal">
                       {t.authorName?.[0] || '?'}
                     </div>
                   )}
                   <div>
-                    <div className="font-semibold text-ink">{t.authorName}</div>
-                    <div className="text-xs text-ink-muted">{t.role || 'Client'}</div>
+                    <div className="font-semibold text-charcoal">{t.authorName}</div>
+                    <div className="text-xs text-charcoal/70">{t.role || 'Client'}</div>
                   </div>
                 </div>
                 <span
@@ -165,11 +165,11 @@ export default function ManageTestimonials() {
                   <span key={n}>{n <= (t.rating || 5) ? '★' : '☆'}</span>
                 ))}
               </div>
-              <p className="mb-2 line-clamp-3 text-sm italic text-ink">“{t.body}”</p>
-              <div className="mb-3 text-xs text-ink-muted">
+              <p className="mb-2 line-clamp-3 text-sm italic text-charcoal">“{t.body}”</p>
+              <div className="mb-3 text-xs text-charcoal/70">
                 {t.package?.title || '—'} · {timeAgo(t.createdAt)}
               </div>
-              <div className="flex flex-wrap gap-2 border-t border-lav-200 pt-3">
+              <div className="flex flex-wrap gap-2 border-t border-taupe/20 pt-3">
                 <button
                   onClick={() => toggleApproved(t)}
                   className={
@@ -179,7 +179,7 @@ export default function ManageTestimonials() {
                 >
                   {t.isApproved ? 'Unapprove' : 'Approve'}
                 </button>
-                <button onClick={() => startEdit(t)} className="rounded-md border border-lav-300 px-3 py-1 text-xs font-semibold text-ink hover:bg-lav-100">
+                <button onClick={() => startEdit(t)} className="rounded-md border border-taupe/30 px-3 py-1 text-xs font-semibold text-charcoal hover:bg-taupe/10">
                   Edit
                 </button>
                 <button onClick={() => remove(t)} className="ml-auto text-xs font-semibold text-red-600 hover:underline">
@@ -189,14 +189,14 @@ export default function ManageTestimonials() {
             </div>
           ))}
           {filtered.length === 0 && (
-            <p className="rounded-xl bg-white p-6 text-center text-sm text-ink-muted ring-1 ring-lav-200 md:col-span-2">
+            <p className="rounded-xl bg-white p-6 text-center text-sm text-charcoal/70 ring-1 ring-taupe/20 md:col-span-2">
               No testimonials
             </p>
           )}
         </div>
 
-        <form onSubmit={save} className="space-y-3 rounded-xl bg-white p-5 shadow-soft ring-1 ring-lav-200">
-          <h3 className="text-base font-semibold text-ink">{editing ? 'Edit testimonial' : 'New testimonial'}</h3>
+        <form onSubmit={save} className="space-y-3 rounded-xl bg-white p-5 shadow-soft ring-1 ring-taupe/20">
+          <h3 className="text-base font-semibold text-charcoal">{editing ? 'Edit testimonial' : 'New testimonial'}</h3>
           {flash && (
             <p className={'rounded-md px-3 py-2 text-sm ' + (flash.type === 'ok' ? 'bg-emerald-50 text-emerald-800' : 'bg-red-50 text-red-700')}>
               {flash.text}
@@ -213,12 +213,12 @@ export default function ManageTestimonials() {
             {packages.map((p) => <option key={p._id} value={p._id}>{p.title}</option>)}
           </select>
           <textarea rows={4} className="input-field" placeholder="Testimonial body" value={form.body} onChange={(e) => setForm({ ...form, body: e.target.value })} required />
-          <label className="flex items-center gap-2 text-sm text-ink">
+          <label className="flex items-center gap-2 text-sm text-charcoal">
             <input type="checkbox" checked={form.isApproved} onChange={(e) => setForm({ ...form, isApproved: e.target.checked })} />
             Approved
           </label>
           <div className="flex justify-end gap-2">
-            {editing && <button type="button" onClick={reset} className="rounded-md border border-lav-300 px-3 py-2 text-sm font-semibold text-ink hover:bg-lav-100">Cancel</button>}
+            {editing && <button type="button" onClick={reset} className="rounded-md border border-taupe/30 px-3 py-2 text-sm font-semibold text-charcoal hover:bg-taupe/10">Cancel</button>}
             <button type="submit" disabled={busy} className="btn-primary w-auto px-4">
               {busy ? 'Saving…' : editing ? 'Save changes' : 'Create testimonial'}
             </button>

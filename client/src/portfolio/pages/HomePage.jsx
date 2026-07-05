@@ -63,7 +63,7 @@ export default function HomePage() {
                 <span className="block text-[14vw] sm:text-[12vw] lg:text-[8.8rem]">hours</span>
               </h1>
               <p className="mt-8 max-w-xl text-lg text-carbon/75 leading-relaxed">
-                Chronos Moments is a small photography studio based in Dhaka, working with
+                BiyeBuzz.com is a small photography studio based in Dhaka, working with
                 couples, families, and brands across South Asia. We are drawn to the in-between
                 — a glance, a held breath, the light on a wall at five p.m.
               </p>
@@ -289,12 +289,6 @@ export default function HomePage() {
           <div className="mt-10 flex flex-wrap gap-3 justify-center">
             <Link to="/portfolio/book" className="pf-btn !bg-paper !text-carbon hover:!bg-sepia hover:!text-paper">
               Reserve a Date →
-            </Link>
-            <Link
-              to="/portfolio/contact"
-              className="pf-btn pf-btn-ghost !border-paper/40 !text-paper hover:!bg-paper/10"
-            >
-              Send a Message
             </Link>
           </div>
         </div>

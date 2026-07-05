@@ -45,13 +45,10 @@ export default function PortfolioNavbar() {
             to="/portfolio"
             end
             className="group flex items-baseline gap-2"
-            aria-label="Chronos Moments — home"
+            aria-label="BiyeBuzz.com — home"
           >
-            <span className="pf-display text-xl sm:text-2xl font-light tracking-tight text-carbon">
-              Chronos
-            </span>
-            <span className="pf-display text-xl sm:text-2xl italic font-light text-sepia">
-              Moments
+            <span className="text-carbon hover:text-sepia transition" style={{ fontFamily: "'Great Vibes', cursive", fontSize: '2.25rem', lineHeight: 1 }}>
+              BiyeBuzz.com
             </span>
             <span className="hidden md:inline-block ml-2 pf-eyebrow">est. 2017</span>
           </NavLink>

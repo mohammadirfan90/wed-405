@@ -114,7 +114,7 @@ export default function BookingForm({ onSuccess, embedded = false, compact = fal
       month: 'long',
       day: 'numeric',
     });
-    const text = `Hello Chronos Moments,
+    const text = `Hello BiyeBuzz.com,
 
 I would like to confirm my booking request.
 

@@ -31,24 +31,11 @@ This document provides a comprehensive list of all active API endpoints availabl
 ## 3. Dashboard Statistics (`/api/dashboard`)
 *Aggregates summaries across operational metrics.*
 - **GET** `/api/dashboard/stats` (Admin)
-  - Returns count statistics: `totalBookings`, `pendingBookings`, `totalContacts`, and `totalPackages`.
+  - Returns count statistics: `totalBookings`, `pendingBookings`, and `totalPackages`.
 
 ---
 
-## 4. Contact Form Inbox (`/api/contact`)
-*Controls visitor inquiries.*
-- **POST** `/api/contact` (Public)
-  - Submits a message inquiry.
-- **GET** `/api/contact` (Admin)
-  - View the list of inquiries in the inbox.
-- **PATCH** `/api/contact/:id/status` (Admin)
-  - Updates inquiry status (`unread`, `read`, `replied`, `archived`). Original message content remains read-only.
-- **DELETE** `/api/contact/:id` (Admin)
-  - Deletes a contact message by ID.
-
----
-
-## 5. Packages and Pricing (`/api/packages`)
+## 4. Packages and Pricing (`/api/packages`)
 *Stores booking offerings.*
 - **GET** `/api/packages` (Public)
   - Lists active packages. Supports query filters: `category=<name>` and `status=<active|inactive>`.
@@ -63,7 +50,7 @@ This document provides a comprehensive list of all active API endpoints availabl
 
 ---
 
-## 6. Hero Slider (`/api/hero`)
+## 5. Hero Slider (`/api/hero`)
 *Manages active banner background slide carousels on the home view.*
 - **GET** `/api/hero` (Public)
   - Fetches the active list of slider backgrounds.
@@ -78,7 +65,7 @@ This document provides a comprehensive list of all active API endpoints availabl
 
 ---
 
-## 7. Video Highlights (`/api/videos`)
+## 6. Video Highlights (`/api/videos`)
 *Manages cinematography reels and YouTube embed links (supporting description metadata).*
 - **GET** `/api/videos` (Public)
   - Returns the list of cinematography reels.
@@ -91,7 +78,7 @@ This document provides a comprehensive list of all active API endpoints availabl
 
 ---
 
-## 8. User Bookings (`/api/bookings`)
+## 7. User Bookings (`/api/bookings`)
 *Manages client session reservations.*
 - **POST** `/api/bookings` (Public / Optional Auth)
   - Requests a booking session reservation.
@@ -102,7 +89,7 @@ This document provides a comprehensive list of all active API endpoints availabl
 
 ---
 
-## 9. User Authentication (`/api/auth`)
+## 8. User Authentication (`/api/auth`)
 *Handles operator and client login/logout.*
 - **POST** `/api/auth/login` (Public)
   - Logs in a user or admin and returns a session auth token.
@@ -113,7 +100,7 @@ This document provides a comprehensive list of all active API endpoints availabl
 
 ---
 
-## 10. Portfolio Gallery (`/api/gallery`)
+## 9. Portfolio Gallery (`/api/gallery`)
 *Stores photography albums.*
 - **GET** `/api/gallery` (Public)
   - Lists published albums (supports `category` filter).
@@ -130,7 +117,7 @@ This document provides a comprehensive list of all active API endpoints availabl
 
 ---
 
-## 11. Testimonials (`/api/testimonials`)
+## 10. Testimonials (`/api/testimonials`)
 *Manages customer feedback/reviews.*
 - **GET** `/api/testimonials` (Public)
   - Lists approved testimonials.
@@ -145,33 +132,7 @@ This document provides a comprehensive list of all active API endpoints availabl
 
 ---
 
-## 12. Portfolio Categories (`/api/categories`)
-*Manages dynamic album tags/categories.*
-- **GET** `/api/categories` (Public)
-  - Lists tags.
-- **POST** `/api/categories` (Admin)
-  - Creates a category.
-- **DELETE** `/api/categories/:id` (Admin)
-  - Removes a category.
-
----
-
-## 13. Services Offered (`/api/services`)
-*Lists general services rendered by the business.*
-- **GET** `/api/services` (Public)
-  - Lists services.
-- **GET** `/api/services/:id` (Public)
-  - Fetches details of a single service.
-- **POST** `/api/services` (Admin)
-  - Creates a service.
-- **PUT** `/api/services/:id` (Admin)
-  - Edits service details.
-- **DELETE** `/api/services/:id` (Admin)
-  - Removes a service.
-
----
-
-## 14. Global Settings (`/api/settings`)
+## 11. Global Settings (`/api/settings`)
 *Global contact information settings.*
 - **GET** `/api/settings` (Public)
   - Returns global info (WhatsApp contact, social URLs, email).
@@ -180,7 +141,7 @@ This document provides a comprehensive list of all active API endpoints availabl
 
 ---
 
-## 15. Server Health Check (`/api/health`)
+## 12. Server Health Check (`/api/health`)
 *System health indicators.*
 - **GET** `/api/health` (Public)
   - Status indicator.

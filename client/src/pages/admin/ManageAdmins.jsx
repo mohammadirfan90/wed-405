@@ -110,10 +110,10 @@ export default function ManageAdmins() {
     <DashboardShell variant="admin" title="Admin Profile" searchPlaceholder="Search">
       <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h2 className="text-xl font-semibold text-ink">Admin Profile</h2>
-          <p className="text-sm text-ink-muted">
+          <h2 className="text-xl font-semibold text-charcoal">Admin Profile</h2>
+          <p className="text-sm text-charcoal/70">
             {stats
-              ? `${stats.totalBookings} bookings · ${stats.pendingBookings} pending · ${stats.totalContacts} contacts · ${stats.totalPackages} packages`
+              ? `${stats.totalBookings} bookings · ${stats.pendingBookings} pending · ${stats.totalPackages} packages`
               : 'Loading stats…'}
           </p>
         </div>
@@ -121,48 +121,48 @@ export default function ManageAdmins() {
 
       <div className="grid gap-4 lg:grid-cols-[1fr_360px]">
         {/* Profile Card / Table representation */}
-        <div className="overflow-hidden rounded-xl bg-white shadow-soft ring-1 ring-lav-200 p-6 space-y-4">
-          <h3 className="text-base font-semibold text-ink">Account Overview</h3>
+        <div className="overflow-hidden rounded-xl bg-white shadow-soft ring-1 ring-taupe/20 p-6 space-y-4">
+          <h3 className="text-base font-semibold text-charcoal">Account Overview</h3>
           <div className="grid grid-cols-2 gap-4 text-sm">
             <div>
-              <span className="block text-xs uppercase tracking-wider text-ink-muted">Username</span>
-              <span className="font-semibold text-ink">{user?.username}</span>
+              <span className="block text-xs uppercase tracking-wider text-charcoal/70">Username</span>
+              <span className="font-semibold text-charcoal">{user?.username}</span>
             </div>
             <div>
-              <span className="block text-xs uppercase tracking-wider text-ink-muted">Name</span>
-              <span className="font-semibold text-ink">{user?.name}</span>
+              <span className="block text-xs uppercase tracking-wider text-charcoal/70">Name</span>
+              <span className="font-semibold text-charcoal">{user?.name}</span>
             </div>
             <div>
-              <span className="block text-xs uppercase tracking-wider text-ink-muted">Email</span>
-              <span className="text-ink-muted">{user?.email}</span>
+              <span className="block text-xs uppercase tracking-wider text-charcoal/70">Email</span>
+              <span className="text-charcoal/70">{user?.email}</span>
             </div>
             <div>
-              <span className="block text-xs uppercase tracking-wider text-ink-muted">Phone</span>
-              <span className="text-ink-muted">{user?.phone}</span>
+              <span className="block text-xs uppercase tracking-wider text-charcoal/70">Phone</span>
+              <span className="text-charcoal/70">{user?.phone}</span>
             </div>
             <div>
-              <span className="block text-xs uppercase tracking-wider text-ink-muted">Role</span>
+              <span className="block text-xs uppercase tracking-wider text-charcoal/70">Role</span>
               <span>
                 {user?.isSuperAdmin ? (
-                  <span className="rounded-full bg-brand/10 px-2 py-0.5 text-[10px] font-semibold uppercase text-brand">
+                  <span className="rounded-full bg-gold/20 px-2 py-0.5 text-[10px] font-semibold uppercase text-gold">
                     super admin
                   </span>
                 ) : (
-                  <span className="rounded-full bg-lav-100 px-2 py-0.5 text-[10px] font-semibold uppercase text-ink-muted">
+                  <span className="rounded-full bg-taupe/10 px-2 py-0.5 text-[10px] font-semibold uppercase text-charcoal/70">
                     admin
                   </span>
                 )}
               </span>
             </div>
             <div>
-              <span className="block text-xs uppercase tracking-wider text-ink-muted">Last Login</span>
-              <span className="text-ink-muted">{formatDate(user?.lastLoginAt)}</span>
+              <span className="block text-xs uppercase tracking-wider text-charcoal/70">Last Login</span>
+              <span className="text-charcoal/70">{formatDate(user?.lastLoginAt)}</span>
             </div>
           </div>
-          <div className="pt-4 border-t border-lav-100">
+          <div className="pt-4 border-t border-taupe/20">
             <button
               onClick={startEdit}
-              className="rounded-md bg-brand px-4 py-2 text-sm font-semibold text-white hover:bg-brand-600"
+              className="rounded-md bg-charcoal px-4 py-2 text-sm font-semibold text-gold hover:bg-charcoal/90"
             >
               Edit Profile Details
             </button>
@@ -173,9 +173,9 @@ export default function ManageAdmins() {
         <div className="space-y-4">
           {/* Edit Profile Form */}
           {editing && (
-            <div className="rounded-xl bg-white p-5 shadow-soft ring-1 ring-lav-200">
-              <h3 className="text-lg font-semibold text-ink">Edit Details</h3>
-              <p className="mt-1 text-xs text-ink-muted">
+            <div className="rounded-xl bg-white p-5 shadow-soft ring-1 ring-taupe/20">
+              <h3 className="text-lg font-semibold text-charcoal">Edit Details</h3>
+              <p className="mt-1 text-xs text-charcoal/70">
                 Update username, name, email, or phone.
               </p>
 
@@ -192,7 +192,7 @@ export default function ManageAdmins() {
 
               <form onSubmit={submitProfile} className="mt-4 space-y-3">
                 <div>
-                  <label className="mb-1 block text-xs font-semibold uppercase tracking-wide text-ink-muted">
+                  <label className="mb-1 block text-xs font-semibold uppercase tracking-wide text-charcoal/70">
                     Username
                   </label>
                   <input
@@ -203,7 +203,7 @@ export default function ManageAdmins() {
                   />
                 </div>
                 <div>
-                  <label className="mb-1 block text-xs font-semibold uppercase tracking-wide text-ink-muted">
+                  <label className="mb-1 block text-xs font-semibold uppercase tracking-wide text-charcoal/70">
                     Name
                   </label>
                   <input
@@ -214,7 +214,7 @@ export default function ManageAdmins() {
                   />
                 </div>
                 <div>
-                  <label className="mb-1 block text-xs font-semibold uppercase tracking-wide text-ink-muted">
+                  <label className="mb-1 block text-xs font-semibold uppercase tracking-wide text-charcoal/70">
                     Email
                   </label>
                   <input
@@ -226,7 +226,7 @@ export default function ManageAdmins() {
                   />
                 </div>
                 <div>
-                  <label className="mb-1 block text-xs font-semibold uppercase tracking-wide text-ink-muted">
+                  <label className="mb-1 block text-xs font-semibold uppercase tracking-wide text-charcoal/70">
                     Phone (E.164)
                   </label>
                   <input
@@ -241,14 +241,14 @@ export default function ManageAdmins() {
                   <button
                     type="submit"
                     disabled={saving}
-                    className="rounded-md bg-brand px-4 py-2 text-sm font-semibold text-white hover:bg-brand-600 disabled:opacity-60"
+                    className="rounded-md bg-charcoal px-4 py-2 text-sm font-semibold text-gold hover:bg-charcoal/90 disabled:opacity-60"
                   >
                     {saving ? 'Saving…' : 'Save Changes'}
                   </button>
                   <button
                     type="button"
                     onClick={cancelEdit}
-                    className="rounded-md border border-lav-300 bg-white px-4 py-2 text-sm font-semibold text-ink hover:bg-lav-100"
+                    className="rounded-md border border-taupe/30 bg-white px-4 py-2 text-sm font-semibold text-charcoal hover:bg-taupe/10"
                   >
                     Cancel
                   </button>
@@ -258,9 +258,9 @@ export default function ManageAdmins() {
           )}
 
           {/* Change Password Form */}
-          <div className="rounded-xl bg-white p-5 shadow-soft ring-1 ring-lav-200">
-            <h3 className="text-lg font-semibold text-ink">Change Password</h3>
-            <p className="mt-1 text-xs text-ink-muted">
+          <div className="rounded-xl bg-white p-5 shadow-soft ring-1 ring-taupe/20">
+            <h3 className="text-lg font-semibold text-charcoal">Change Password</h3>
+            <p className="mt-1 text-xs text-charcoal/70">
               Rotate your account password.
             </p>
 
@@ -277,7 +277,7 @@ export default function ManageAdmins() {
 
             <form onSubmit={submitPassword} className="mt-4 space-y-3">
               <div>
-                <label className="mb-1 block text-xs font-semibold uppercase tracking-wide text-ink-muted">
+                <label className="mb-1 block text-xs font-semibold uppercase tracking-wide text-charcoal/70">
                   Current Password
                 </label>
                 <input
@@ -289,7 +289,7 @@ export default function ManageAdmins() {
                 />
               </div>
               <div>
-                <label className="mb-1 block text-xs font-semibold uppercase tracking-wide text-ink-muted">
+                <label className="mb-1 block text-xs font-semibold uppercase tracking-wide text-charcoal/70">
                   New Password
                 </label>
                 <input
@@ -306,7 +306,7 @@ export default function ManageAdmins() {
                 <button
                   type="submit"
                   disabled={changingPw}
-                  className="w-full rounded-md bg-brand px-4 py-2 text-sm font-semibold text-white hover:bg-brand-600 disabled:opacity-60"
+                  className="w-full rounded-md bg-charcoal px-4 py-2 text-sm font-semibold text-gold hover:bg-charcoal/90 disabled:opacity-60"
                 >
                   {changingPw ? 'Updating…' : 'Change Password'}
                 </button>

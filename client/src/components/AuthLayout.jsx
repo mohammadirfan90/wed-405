@@ -21,8 +21,8 @@ export default function AuthLayout({ children, heading, sub }) {
             <Logo size={56} tone="light" />
 
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-white/70">
-                Chronos Moments
+              <p className="text-white/70" style={{ fontFamily: "'Great Vibes', cursive", fontSize: '1.75rem', lineHeight: 1 }}>
+                BiyeBuzz.com
               </p>
               <h2 className="mt-3 text-3xl font-bold leading-tight sm:text-4xl">
                 Turning Your Forever Moments into Timeless Memories
@@ -49,7 +49,7 @@ export default function AuthLayout({ children, heading, sub }) {
             </div>
 
             <p className="text-xs text-white/60">
-              © 2026 Chronos Moments. All rights reserved.
+              © 2026 BiyeBuzz.com. All rights reserved.
             </p>
           </div>
         </aside>
@@ -76,7 +76,7 @@ export default function AuthLayout({ children, heading, sub }) {
           </div>
 
           <div className="hidden border-t border-lav-200 px-12 py-4 text-xs text-ink-muted md:block">
-            Need help? <span className="font-semibold text-brand">support@chronosmoments.com</span>
+            Need help? <span className="font-semibold text-brand">support@biyebuzz.com</span>
           </div>
         </main>
       </div>

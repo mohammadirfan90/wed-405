@@ -69,25 +69,25 @@ export default function ManageHeroSlides() {
     <DashboardShell variant="admin" title="Manage Hero Slides" searchPlaceholder="Search slides">
       <div className="grid gap-6 lg:grid-cols-[1fr_420px]">
         <div>
-          <h2 className="mb-3 text-xl font-semibold text-ink">Hero Section Slides</h2>
+          <h2 className="mb-3 text-xl font-semibold text-charcoal">Hero Section Slides</h2>
           <div className="grid gap-4 sm:grid-cols-2">
             {items.map((s) => (
-              <div key={s._id} className="overflow-hidden rounded-xl bg-white shadow-soft ring-1 ring-lav-200">
-                <div className="relative h-40 bg-ink/10">
+              <div key={s._id} className="overflow-hidden rounded-xl bg-white shadow-soft ring-1 ring-taupe/20">
+                <div className="relative h-40 bg-charcoal/10">
                   {s.image ? (
                     <img src={s.image} alt="" className="h-full w-full object-cover" />
                   ) : (
-                    <div className="grid h-full place-items-center text-xs text-ink-muted">No Image</div>
+                    <div className="grid h-full place-items-center text-xs text-charcoal/70">No Image</div>
                   )}
-                  <div className="absolute top-2 right-2 rounded bg-ink/80 px-2 py-0.5 text-xs font-semibold text-white">
+                  <div className="absolute top-2 right-2 rounded bg-charcoal/80 px-2 py-0.5 text-xs font-semibold text-white">
                     Order: {s.order}
                   </div>
                 </div>
                 <div className="p-4">
-                  <h3 className="line-clamp-1 font-bold text-ink">{s.title || '(No title)'}</h3>
-                  <p className="mt-1 line-clamp-2 text-xs text-ink-muted">{s.subtitle}</p>
-                  <div className="mt-4 flex gap-2 border-t border-lav-200 pt-3">
-                    <button onClick={() => startEdit(s)} className="rounded-md border border-lav-300 px-3 py-1 text-xs font-semibold text-ink hover:bg-lav-100">
+                  <h3 className="line-clamp-1 font-bold text-charcoal">{s.title || '(No title)'}</h3>
+                  <p className="mt-1 line-clamp-2 text-xs text-charcoal/70">{s.subtitle}</p>
+                  <div className="mt-4 flex gap-2 border-t border-taupe/20 pt-3">
+                    <button onClick={() => startEdit(s)} className="rounded-md border border-taupe/30 px-3 py-1 text-xs font-semibold text-charcoal hover:bg-taupe/10">
                       Edit
                     </button>
                     <button onClick={() => remove(s)} className="ml-auto text-xs font-semibold text-red-600 hover:underline">
@@ -98,15 +98,15 @@ export default function ManageHeroSlides() {
               </div>
             ))}
             {items.length === 0 && (
-              <p className="rounded-xl bg-white p-6 text-center text-sm text-ink-muted ring-1 ring-lav-200 sm:col-span-2">
+              <p className="rounded-xl bg-white p-6 text-center text-sm text-charcoal/70 ring-1 ring-taupe/20 sm:col-span-2">
                 No hero slides yet
               </p>
             )}
           </div>
         </div>
 
-        <form onSubmit={save} className="h-fit space-y-3 rounded-xl bg-white p-5 shadow-soft ring-1 ring-lav-200">
-          <h3 className="text-base font-semibold text-ink">{editing ? 'Edit hero slide' : 'New hero slide'}</h3>
+        <form onSubmit={save} className="h-fit space-y-3 rounded-xl bg-white p-5 shadow-soft ring-1 ring-taupe/20">
+          <h3 className="text-base font-semibold text-charcoal">{editing ? 'Edit hero slide' : 'New hero slide'}</h3>
           {flash && (
             <p className={'rounded-md px-3 py-2 text-sm ' + (flash.type === 'ok' ? 'bg-emerald-50 text-emerald-800' : 'bg-red-50 text-red-700')}>
               {flash.text}
@@ -129,7 +129,7 @@ export default function ManageHeroSlides() {
             <input type="number" className="input-field" value={form.order} onChange={(e) => setForm({ ...form, order: e.target.value })} />
           </div>
           <div className="flex justify-end gap-2 pt-2">
-            {editing && <button type="button" onClick={reset} className="rounded-md border border-lav-300 px-3 py-2 text-sm font-semibold text-ink hover:bg-lav-100">Cancel</button>}
+            {editing && <button type="button" onClick={reset} className="rounded-md border border-taupe/30 px-3 py-2 text-sm font-semibold text-charcoal hover:bg-taupe/10">Cancel</button>}
             <button type="submit" disabled={busy} className="btn-primary w-auto px-4">
               {busy ? 'Saving…' : editing ? 'Save changes' : 'Create slide'}
             </button>

@@ -169,7 +169,7 @@ export default function Home() {
       day: 'numeric'
     });
 
-    const text = `Hello Chronos Moments!
+    const text = `Hello BiyeBuzz.com!
 
 I would like to confirm my booking request.
 
@@ -202,9 +202,6 @@ Please review my request and let me know the payment details. Thank you!`;
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex items-center justify-between">
           <div className="flex items-center gap-2 cursor-pointer" onClick={() => scrollTo('home')}>
             <Logo size={40} />
-            <span className={`font-serif-luxury text-xl font-bold tracking-widest uppercase hidden sm:inline transition-colors ${scrolled ? 'text-charcoal' : 'text-white'}`}>
-              CHRONOS <span className="text-[#D4AF37]">MOMENTS</span>
-            </span>
           </div>
 
           {/* Desktop Nav Links */}
@@ -895,13 +892,10 @@ Please review my request and let me know the payment details. Thank you!`;
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-3 cursor-pointer" onClick={() => scrollTo('home')}>
             <Logo size={36} />
-            <span className="font-serif-luxury text-lg font-bold tracking-widest text-charcoal uppercase">
-              CHRONOS <span className="text-gold">MOMENTS</span>
-            </span>
           </div>
 
           <p className="text-xs text-charcoal/50 font-light text-center md:text-left">
-            © 2026 Chronos Moments. All Rights Reserved. Capture your forever.
+            © 2026 BiyeBuzz.com. All Rights Reserved. Capture your forever.
           </p>
 
           <div className="flex gap-4">

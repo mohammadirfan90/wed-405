@@ -92,7 +92,7 @@ const Testimonial = require('../models/Testimonial');
         role: 'Bride',
         avatar: 'https://i.pravatar.cc/150?img=47',
         rating: 5,
-        body: 'Chronos Moments made our day feel like a movie. The team was calm, kind, and insanely talented.',
+        body: 'BiyeBuzz.com made our day feel like a movie. The team was calm, kind, and insanely talented.',
         isApproved: true,
       },
       {

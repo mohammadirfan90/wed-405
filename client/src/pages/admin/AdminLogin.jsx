@@ -105,7 +105,7 @@ export default function AdminLogin() {
 
               <h1 className="font-serif-luxury text-3xl font-extrabold leading-tight text-charcoal">
                 Sign in to manage<br />
-                <span className="text-gold">Chronos Moments</span>
+                <span className="text-gold" style={{ fontFamily: "'Great Vibes', cursive", fontSize: '2.5rem', fontWeight: 'normal' }}>BiyeBuzz.com</span>
               </h1>
               <p className="mt-3 text-sm text-charcoal/70">
                 Use your admin username and password. Customer accounts cannot access this portal.
@@ -184,7 +184,7 @@ export default function AdminLogin() {
         </main>
 
         <footer className="border-t border-taupe/10 pt-6 text-center text-[11px] text-charcoal/40">
-          © 2026 Chronos Moments · Admin Console
+          © 2026 BiyeBuzz.com · Admin Console
         </footer>
       </div>
     </div>

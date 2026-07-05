@@ -7,7 +7,7 @@ const packageSchema = new mongoose.Schema(
     category: {
       type: String,
       required: true,
-      enum: ['Wedding', 'Cinematography', 'Pre-Wedding', 'Engagement', 'Event', 'Custom'],
+      enum: ['Wedding', 'Cinematography', 'Pre-Wedding', 'Engagement', 'Event', 'Custom', 'Holud'],
     },
     price: { type: Number, required: true, min: 0 },
     currency: { type: String, default: 'BDT', uppercase: true },

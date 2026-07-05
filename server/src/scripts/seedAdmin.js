@@ -8,21 +8,19 @@ const VideoItem = require('../models/VideoItem');
 const Package = require('../models/Package');
 const Gallery = require('../models/Gallery');
 const Testimonial = require('../models/Testimonial');
-const Service = require('../models/Service');
-const Category = require('../models/Category');
 
 // Idempotent admin seeder. Safe to run on every deploy — it never duplicates
 // the admin and never downgrades a role. Prints a clear summary of the
 // credentials it's about to use so the bootstrap story is auditable.
 //
-// Writes to the dedicated `admins` collection (chronos_moments.admins).
+// Writes to the dedicated `admins` collection (biyebuzz.admins).
 async function seedAdmin() {
   await connectDB();
 
   const username = (process.env.SEED_ADMIN_USERNAME || 'admin').trim();
   const password = process.env.SEED_ADMIN_PASSWORD || 'Admin@12345';
   const name = process.env.SEED_ADMIN_NAME || 'System Admin';
-  const email = process.env.SEED_ADMIN_EMAIL || 'admin@chronosmoments.com';
+  const email = process.env.SEED_ADMIN_EMAIL || 'admin@biyebuzz.com';
   const phone = process.env.SEED_ADMIN_PHONE || '+8801700000000';
 
   console.log('[seed] Target database  :', require('mongoose').connection.name);
@@ -302,31 +300,6 @@ async function seedAdmin() {
     });
     console.log('[seed] Seeded default About Content.');
   }
-
-  // Seed Services (Spec)
-  const serviceCount = await Service.countDocuments();
-  if (serviceCount === 0) {
-    await Service.create([
-      { name: "Pre Wedding Photography", description: "Romantic couple shoots under the sunset.", price: 15000 },
-      { name: "Holud & Mehendi photography", description: "Capturing colorful traditions and emotions.", price: 20000 },
-      { name: "Wedding Day Photography", description: "High-end luxury wedding portraiture.", price: 35000 },
-      { name: "Reception Cinematography", description: "Cinematic teasers and full-length wedding films.", price: 40000 }
-    ]);
-    console.log('[seed] Seeded default Services.');
-  }
-
-  // Seed Categories (Spec)
-  const categoryCount = await Category.countDocuments();
-  if (categoryCount === 0) {
-    await Category.create([
-      { name: "Wedding" },
-      { name: "Pre-Wedding" },
-      { name: "Engagement" },
-      { name: "Event" }
-    ]);
-    console.log('[seed] Seeded default Categories.');
-  }
-
   return admin;
 }
 
@@ -334,7 +307,7 @@ seedAdmin()
   .then((admin) => {
     console.log('');
     console.log('============================================================');
-    console.log('  Chronos Moments — admin bootstrap complete');
+    console.log('  BiyeBuzz.com — admin bootstrap complete');
     console.log('============================================================');
     console.log('  DB:       ' + require('mongoose').connection.name);
     console.log('  Coll:     ' + Admin.collection.name);

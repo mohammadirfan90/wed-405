@@ -174,7 +174,7 @@ export async function getCategories() {
   const set = new Set();
   (portfolio || []).forEach((p) => p.category && set.add(p.category));
   if (set.size === 0) {
-    ['Wedding', 'Pre-Wedding', 'Engagement', 'Event', 'Editorial'].forEach((c) => set.add(c));
+    ['Wedding', 'Pre-Wedding', 'Engagement', 'Event', 'Editorial', 'Holud'].forEach((c) => set.add(c));
   }
   return ['All', ...Array.from(set).sort()];
 }

@@ -15,9 +15,8 @@ export default function PortfolioFooter({ settings = {} }) {
           {/* Brand */}
           <div className="md:col-span-5 space-y-6">
             <div className="flex items-baseline gap-2">
-              <span className="pf-display text-4xl md:text-5xl font-light">Chronos</span>
-              <span className="pf-display text-4xl md:text-5xl italic font-light text-sepia">
-                Moments
+              <span className="text-4xl md:text-5xl font-light text-paper" style={{ fontFamily: "'Great Vibes', cursive", fontSize: '3.25rem', lineHeight: 1 }}>
+                BiyeBuzz.com
               </span>
             </div>
             <p className="pf-quote text-2xl md:text-3xl text-paper/90 max-w-md">
@@ -113,7 +112,7 @@ export default function PortfolioFooter({ settings = {} }) {
 
         <div className="mt-16 pt-6 border-t border-paper/15 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <p className="text-[11px] font-mono uppercase tracking-[0.2em] text-paper/50">
-            © {year} Chronos Moments · All images are copyrighted
+            © {year} BiyeBuzz.com · All rights reserved
           </p>
           <p className="text-[11px] font-mono uppercase tracking-[0.2em] text-paper/50">
             Made on a Leica, a Moleskine, and a lot of coffee

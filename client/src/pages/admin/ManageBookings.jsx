@@ -27,11 +27,11 @@ export default function ManageBookings() {
   return (
     <DashboardShell variant="admin" title="Manage Bookings" searchPlaceholder="Search bookings">
       <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-        <h2 className="text-xl font-semibold text-ink">Manage Bookings</h2>
+        <h2 className="text-xl font-semibold text-charcoal">Manage Bookings</h2>
         <div className="flex flex-wrap gap-2">
-          <button onClick={() => setFilter('')} className={'rounded-full px-3 py-1 text-xs font-semibold ' + (!filter ? 'bg-brand text-white' : 'bg-white text-ink-muted border border-lav-300')}>All</button>
+          <button onClick={() => setFilter('')} className={'rounded-full px-3 py-1 text-xs font-semibold ' + (!filter ? 'bg-charcoal text-gold' : 'bg-white text-charcoal/70 border border-taupe/30')}>All</button>
           {STATUS.map((s) => (
-            <button key={s} onClick={() => setFilter(s)} className={'rounded-full px-3 py-1 text-xs font-semibold capitalize ' + (filter === s ? 'bg-brand text-white' : 'bg-white text-ink-muted border border-lav-300')}>
+            <button key={s} onClick={() => setFilter(s)} className={'rounded-full px-3 py-1 text-xs font-semibold capitalize ' + (filter === s ? 'bg-charcoal text-gold' : 'bg-white text-charcoal/70 border border-taupe/30')}>
               {s}
             </button>
           ))}
@@ -40,7 +40,7 @@ export default function ManageBookings() {
 
       <div className="overflow-hidden rounded-xl bg-white shadow-soft">
         <table className="w-full text-sm">
-          <thead className="bg-lav-100 text-left text-xs uppercase text-ink-muted">
+          <thead className="bg-taupe/10 text-left text-xs uppercase text-charcoal/70">
             <tr>
               <th className="px-4 py-3">Customer</th>
               <th className="px-4 py-3">Package</th>
@@ -52,20 +52,20 @@ export default function ManageBookings() {
           </thead>
           <tbody>
             {bookings.map((b) => (
-              <tr key={b._id} className="border-t border-lav-200">
+              <tr key={b._id} className="border-t border-taupe/20">
                 <td className="px-4 py-3">
-                  <div className="font-semibold text-ink">
+                  <div className="font-semibold text-charcoal">
                     {b.user?.name || 'Guest'} {!b.user && <span className="text-[10px] font-semibold text-amber-600 bg-amber-50 border border-amber-200 rounded px-1.5 py-0.5 ml-1">Guest</span>}
                   </div>
-                  <div className="text-xs text-ink-muted">
+                  <div className="text-xs text-charcoal/70">
                     {b.user?.phone || b.contactPhone || ''}
                     {(!b.user && b.contactEmail) && ` · ${b.contactEmail}`}
                   </div>
                 </td>
-                <td className="px-4 py-3 text-ink">{b.package?.title || '—'}</td>
-                <td className="px-4 py-3 text-ink-muted">{new Date(b.eventDate).toLocaleDateString()}</td>
-                <td className="px-4 py-3 text-ink-muted">{b.venue}</td>
-                <td className="px-4 py-3 capitalize text-ink-muted">{b.status}</td>
+                <td className="px-4 py-3 text-charcoal">{b.package?.title || '—'}</td>
+                <td className="px-4 py-3 text-charcoal/70">{new Date(b.eventDate).toLocaleDateString()}</td>
+                <td className="px-4 py-3 text-charcoal/70">{b.venue}</td>
+                <td className="px-4 py-3 capitalize text-charcoal/70">{b.status}</td>
                 <td className="px-4 py-3 text-right">
                   {b.status === 'pending' && (
                     <div className="flex justify-end gap-2">
@@ -80,7 +80,7 @@ export default function ManageBookings() {
               </tr>
             ))}
             {!loading && bookings.length === 0 && (
-              <tr><td colSpan={6} className="px-4 py-6 text-center text-sm text-ink-muted">No bookings yet</td></tr>
+              <tr><td colSpan={6} className="px-4 py-6 text-center text-sm text-charcoal/70">No bookings yet</td></tr>
             )}
           </tbody>
         </table>

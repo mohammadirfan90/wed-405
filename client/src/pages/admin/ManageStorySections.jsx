@@ -69,23 +69,23 @@ export default function ManageStorySections() {
     <DashboardShell variant="admin" title="Manage Stories" searchPlaceholder="Search story sections">
       <div className="grid gap-6 lg:grid-cols-[1fr_420px]">
         <div>
-          <h2 className="mb-3 text-xl font-semibold text-ink">About Us & Stories Sections</h2>
+          <h2 className="mb-3 text-xl font-semibold text-charcoal">About Us & Stories Sections</h2>
           <div className="space-y-4">
             {items.map((s) => (
-              <div key={s._id} className="flex gap-4 rounded-xl bg-white p-4 shadow-soft ring-1 ring-lav-200">
+              <div key={s._id} className="flex gap-4 rounded-xl bg-white p-4 shadow-soft ring-1 ring-taupe/20">
                 {s.image && (
-                  <img src={s.image} alt="" className="h-24 w-32 shrink-0 rounded-lg object-cover bg-ink/10" />
+                  <img src={s.image} alt="" className="h-24 w-32 shrink-0 rounded-lg object-cover bg-charcoal/10" />
                 )}
                 <div className="min-w-0 flex-1">
                   <div className="flex items-start justify-between gap-2">
-                    <h3 className="font-bold text-ink truncate">{s.title}</h3>
-                    <span className="shrink-0 rounded bg-lav-100 px-2 py-0.5 text-xs font-semibold text-ink">
+                    <h3 className="font-bold text-charcoal truncate">{s.title}</h3>
+                    <span className="shrink-0 rounded bg-taupe/10 px-2 py-0.5 text-xs font-semibold text-charcoal">
                       Order: {s.order}
                     </span>
                   </div>
-                  <p className="mt-1 line-clamp-2 text-xs text-ink-muted whitespace-pre-wrap">{s.body}</p>
-                  <div className="mt-3 flex gap-2 border-t border-lav-100 pt-2">
-                    <button onClick={() => startEdit(s)} className="rounded border border-lav-300 px-2.5 py-0.5 text-xs font-semibold text-ink hover:bg-lav-100">
+                  <p className="mt-1 line-clamp-2 text-xs text-charcoal/70 whitespace-pre-wrap">{s.body}</p>
+                  <div className="mt-3 flex gap-2 border-t border-taupe/20 pt-2">
+                    <button onClick={() => startEdit(s)} className="rounded border border-taupe/30 px-2.5 py-0.5 text-xs font-semibold text-charcoal hover:bg-taupe/10">
                       Edit
                     </button>
                     <button onClick={() => remove(s)} className="ml-auto text-xs font-semibold text-red-600 hover:underline">
@@ -96,15 +96,15 @@ export default function ManageStorySections() {
               </div>
             ))}
             {items.length === 0 && (
-              <p className="rounded-xl bg-white p-6 text-center text-sm text-ink-muted ring-1 ring-lav-200">
+              <p className="rounded-xl bg-white p-6 text-center text-sm text-charcoal/70 ring-1 ring-taupe/20">
                 No story sections yet
               </p>
             )}
           </div>
         </div>
 
-        <form onSubmit={save} className="h-fit space-y-3 rounded-xl bg-white p-5 shadow-soft ring-1 ring-lav-200">
-          <h3 className="text-base font-semibold text-ink">{editing ? 'Edit story section' : 'New story section'}</h3>
+        <form onSubmit={save} className="h-fit space-y-3 rounded-xl bg-white p-5 shadow-soft ring-1 ring-taupe/20">
+          <h3 className="text-base font-semibold text-charcoal">{editing ? 'Edit story section' : 'New story section'}</h3>
           {flash && (
             <p className={'rounded-md px-3 py-2 text-sm ' + (flash.type === 'ok' ? 'bg-emerald-50 text-emerald-800' : 'bg-red-50 text-red-700')}>
               {flash.text}
@@ -127,7 +127,7 @@ export default function ManageStorySections() {
             <input type="number" className="input-field" value={form.order} onChange={(e) => setForm({ ...form, order: e.target.value })} />
           </div>
           <div className="flex justify-end gap-2 pt-2">
-            {editing && <button type="button" onClick={reset} className="rounded-md border border-lav-300 px-3 py-2 text-sm font-semibold text-ink hover:bg-lav-100">Cancel</button>}
+            {editing && <button type="button" onClick={reset} className="rounded-md border border-taupe/30 px-3 py-2 text-sm font-semibold text-charcoal hover:bg-taupe/10">Cancel</button>}
             <button type="submit" disabled={busy} className="btn-primary w-auto px-4">
               {busy ? 'Saving…' : editing ? 'Save changes' : 'Create section'}
             </button>

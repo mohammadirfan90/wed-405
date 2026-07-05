@@ -85,7 +85,7 @@ export default function BookNowPage() {
                         {settings.contact_email}
                       </a>
                     ) : (
-                      'hello@chronos-moments.com'
+                      'hello@biyebuzz.com'
                     )}
                   </dd>
                 </div>

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import api from '../../lib/api';
 import DashboardShell from '../../components/DashboardShell.jsx';
 
-const CATEGORIES = ['Wedding', 'Cinematography', 'Pre-Wedding', 'Engagement', 'Event', 'Custom'];
+const CATEGORIES = ['Wedding', 'Cinematography', 'Pre-Wedding', 'Engagement', 'Event', 'Custom', 'Holud'];
 const EMPTY = { title: '', category: 'Wedding', price: 0, currency: 'BDT', duration: '', description: '', features: '', coverImage: '', isActive: true };
 
 export default function ManagePackages() {
@@ -47,10 +47,10 @@ export default function ManagePackages() {
     <DashboardShell variant="admin" title="Manage Packages" searchPlaceholder="Search">
       <div className="grid gap-6 lg:grid-cols-[1fr_400px]">
         <div>
-          <h2 className="mb-3 text-xl font-semibold text-ink">Manage Packages</h2>
+          <h2 className="mb-3 text-xl font-semibold text-charcoal">Manage Packages</h2>
           <div className="overflow-hidden rounded-xl bg-white shadow-soft">
             <table className="w-full text-sm">
-              <thead className="bg-lav-100 text-left text-xs uppercase text-ink-muted">
+              <thead className="bg-taupe/10 text-left text-xs uppercase text-charcoal/70">
                 <tr>
                   <th className="px-4 py-3">Title</th>
                   <th className="px-4 py-3">Category</th>
@@ -61,19 +61,19 @@ export default function ManagePackages() {
               </thead>
               <tbody>
                 {items.map((p) => (
-                  <tr key={p._id} className="border-t border-lav-200">
-                    <td className="px-4 py-3 font-semibold text-ink">{p.title}</td>
-                    <td className="px-4 py-3 text-ink-muted">{p.category}</td>
-                    <td className="px-4 py-3 text-ink-muted">{p.currency} {p.price.toLocaleString()}</td>
-                    <td className="px-4 py-3 text-ink-muted">{p.isActive ? 'Yes' : 'No'}</td>
+                  <tr key={p._id} className="border-t border-taupe/20">
+                    <td className="px-4 py-3 font-semibold text-charcoal">{p.title}</td>
+                    <td className="px-4 py-3 text-charcoal/70">{p.category}</td>
+                    <td className="px-4 py-3 text-charcoal/70">{p.currency} {p.price.toLocaleString()}</td>
+                    <td className="px-4 py-3 text-charcoal/70">{p.isActive ? 'Yes' : 'No'}</td>
                     <td className="px-4 py-3 text-right">
-                      <button onClick={() => startEdit(p)} className="mr-2 text-xs font-semibold text-brand hover:underline">Edit</button>
+                      <button onClick={() => startEdit(p)} className="mr-2 text-xs font-semibold text-gold hover:underline">Edit</button>
                       <button onClick={() => remove(p._id)} className="text-xs font-semibold text-red-600 hover:underline">Delete</button>
                     </td>
                   </tr>
                 ))}
                 {items.length === 0 && (
-                  <tr><td colSpan={5} className="px-4 py-6 text-center text-sm text-ink-muted">No packages yet</td></tr>
+                  <tr><td colSpan={5} className="px-4 py-6 text-center text-sm text-charcoal/70">No packages yet</td></tr>
                 )}
               </tbody>
             </table>
@@ -81,7 +81,7 @@ export default function ManagePackages() {
         </div>
 
         <form onSubmit={save} className="space-y-3 rounded-xl bg-white p-5 shadow-soft">
-          <h3 className="text-base font-semibold text-ink">{editing ? 'Edit package' : 'New package'}</h3>
+          <h3 className="text-base font-semibold text-charcoal">{editing ? 'Edit package' : 'New package'}</h3>
           <input className="input-field" placeholder="Title" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} required />
           <select className="input-field" value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })}>
             {CATEGORIES.map((c) => <option key={c}>{c}</option>)}
@@ -94,11 +94,11 @@ export default function ManagePackages() {
           <textarea rows={2} className="input-field" placeholder="Description" value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} />
           <textarea rows={4} className="input-field" placeholder={'Features (one per line)'} value={form.features} onChange={(e) => setForm({ ...form, features: e.target.value })} />
           <input className="input-field" placeholder="Cover image URL" value={form.coverImage} onChange={(e) => setForm({ ...form, coverImage: e.target.value })} />
-          <label className="flex items-center gap-2 text-sm text-ink">
+          <label className="flex items-center gap-2 text-sm text-charcoal">
             <input type="checkbox" checked={form.isActive} onChange={(e) => setForm({ ...form, isActive: e.target.checked })} /> Active
           </label>
           <div className="flex justify-end gap-2">
-            {editing && <button type="button" onClick={reset} className="rounded-md border border-lav-300 px-3 py-2 text-sm font-semibold text-ink hover:bg-lav-100">Cancel</button>}
+            {editing && <button type="button" onClick={reset} className="rounded-md border border-taupe/30 px-3 py-2 text-sm font-semibold text-charcoal hover:bg-taupe/10">Cancel</button>}
             <button type="submit" disabled={busy} className="btn-primary w-auto px-4">
               {busy ? 'Saving…' : editing ? 'Save changes' : 'Create package'}
             </button>
