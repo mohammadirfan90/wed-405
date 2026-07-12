@@ -1052,3 +1052,4 @@ Vite proxies `/api/*` to `http://localhost:5000`, so cookies & same-origin just 
 ---
 
 > Made with care by the Chronos Moments team — *Turning your forever moments into timeless memories.*
+<!-- puku-cli --resume d08c58cb-6300-4014-9e0f-a95769832e8a -->
