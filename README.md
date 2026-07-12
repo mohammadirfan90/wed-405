@@ -1001,6 +1001,7 @@ Vite proxies `/api/*` to `http://localhost:5000`, so cookies & same-origin just 
 **Tooling**
 - `nodemon` for backend dev hot-reload
 - Idempotent seeder for safe re-deploys
+- AI Agent Integration: Workspace workflows (`.agent`), agent skills (`.agents`), and execution context/databases (`.puku`, `.puku-cli`, `.gemini`, `.gsd`, `.opencode` — all ignored in Git)
 
 ---
 

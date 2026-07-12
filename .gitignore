@@ -1,0 +1,20 @@
+# Dependency directories
+node_modules/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# AI Agent and tooling files
+.puku
+.puku-cli
+.agent
+.agents
+.gemini
+.gsd
+.opencode
