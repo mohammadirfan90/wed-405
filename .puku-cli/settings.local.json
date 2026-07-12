@@ -6,7 +6,10 @@
       "Bash(node -e \"const app = require\\(''''./src/app''''\\); const routes = []; app._router.stack.forEach\\(m => { if \\(m.name === ''''router'''' && m.handle && m.handle.stack\\) { m.handle.stack.forEach\\(r => { if \\(r.route\\) routes.push\\(Object.keys\\(r.route.methods\\)[0].toUpperCase\\(\\) + '''' '''' + m.regexp.toString\\(\\).match\\(/\\\\\\\\/api\\\\\\\\/[^\\\\]+/\\)?.[0]\\); }\\); } }\\); console.log\\(''''Routes:''''\\); routes.forEach\\(r => console.log\\(''''  '''' + r\\)\\);\")",
       "Bash(node scripts/list-routes.js)",
       "Bash(echo \"EXIT=$?\")",
-      "Bash(node -e \"console.log\\(''hello''\\)\")"
+      "Bash(node -e \"console.log\\(''hello''\\)\")",
+      "WebFetch(domain:lobehub.com)",
+      "Bash(curl -sL -A \"Mozilla/5.0 \\(Macintosh; Intel Mac OS X 10_15_7\\) AppleWebKit/537.36 \\(KHTML, like Gecko\\) Chrome/120.0.0.0 Safari/537.36\" \"https://lobehub.com/skills/sriramgandhis-skills-magic-ui-generator/skill.md\")",
+      "WebSearch"
     ]
   }
 }

@@ -21,7 +21,7 @@ const getContent = asyncHandler(async (req, res) => {
         data: {
           heroText: "Turning Your Forever Moments into Timeless Memories",
           bannerImage: "https://weddingheritagebd.com/wp-content/uploads/2026/02/01_1-scaled.jpg",
-          introText: "Welcome to Wedding Heritage."
+          introText: "Welcome to BiyeBuzz.com."
         }
       });
     }

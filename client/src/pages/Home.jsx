@@ -52,7 +52,7 @@ export default function Home() {
   const [testimonials, setTestimonials] = useState([]);
   const [settings, setSettings] = useState({
     whatsapp_number: '+8801327292323',
-    contact_email: 'info@weddingheritagebd.com',
+    contact_email: 'info@biyebuzz.com',
     contact_phone: '01327292323',
     contact_address: 'Elephant Road, Dhaka, 1205',
     facebook_url: 'https://facebook.com',
@@ -174,7 +174,7 @@ export default function Home() {
 I would like to confirm my booking request.
 
 Booking Details:
-* Booking Reference:* ${bookingSuccess._id}
+* Booking Reference:* ${bookingSuccess.bookingId || bookingSuccess._id}
 * Package:* ${selectedPkg.title || 'Selected Package'}
 * Date:* ${formattedDate}
 * Venue:* ${bookingSuccess.venue}
@@ -215,6 +215,12 @@ Please review my request and let me know the payment details. Thank you!`;
           </div>
 
           <div className="hidden lg:flex items-center gap-4">
+            <Link
+              to="/track-booking"
+              className={`text-xs font-semibold px-4 py-2 border rounded-lg hover:border-[#D4AF37] hover:text-[#D4AF37] transition uppercase tracking-wider luxury-button ${scrolled ? 'border-taupe/30 text-charcoal' : 'border-gray-600 text-white'}`}
+            >
+              Delivery
+            </Link>
             {(user && user.role === 'admin') && (
               <Link
                 to="/admin"
@@ -259,6 +265,7 @@ Please review my request and let me know the payment details. Thank you!`;
             <button onClick={() => scrollTo('services')} className="text-left py-2 hover:text-[#D4AF37] border-b border-taupe/10">Services</button>
             <button onClick={() => scrollTo('portfolio')} className="text-left py-2 hover:text-[#D4AF37] border-b border-taupe/10">Portfolio</button>
             <button onClick={() => scrollTo('packages')} className="text-left py-2 hover:text-[#D4AF37] border-b border-taupe/10">Packages</button>
+            <Link to="/track-booking" className="text-left py-2 hover:text-[#D4AF37] border-b border-taupe/10">Delivery</Link>
             <button onClick={() => scrollTo('contact')} className="text-left py-2 hover:text-[#D4AF37] border-b border-taupe/10">Contact Us</button>
             <button
               onClick={() => scrollTo('contact')}
@@ -706,7 +713,7 @@ Please review my request and let me know the payment details. Thank you!`;
                     </div>
                     <div>
                       <h3 className="text-lg font-bold text-charcoal">Booking Request Submitted</h3>
-                      <p className="text-xs text-charcoal/50 font-light">Reference: <span className="font-mono">{bookingSuccess._id}</span></p>
+                      <p className="text-xs text-charcoal/50 font-light">Reference: <span className="font-mono font-bold text-gold bg-charcoal px-2 py-0.5 rounded text-[10px]">{bookingSuccess.bookingId || bookingSuccess._id}</span></p>
                     </div>
                   </div>
 

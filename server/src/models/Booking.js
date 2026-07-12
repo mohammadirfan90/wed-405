@@ -15,6 +15,8 @@ const bookingSchema = new mongoose.Schema(
       match: [/^\+[1-9]\d{6,14}$/, 'Phone must be in international format'],
     },
     contactEmail: { type: String, trim: true, lowercase: true },
+    bookingId: { type: String, unique: true },
+    googleDriveLink: { type: String, default: '' },
     status: {
       type: String,
       enum: ['pending', 'approved', 'declined', 'completed', 'cancelled'],

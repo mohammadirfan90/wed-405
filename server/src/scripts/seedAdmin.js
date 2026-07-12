@@ -81,7 +81,7 @@ async function seedAdmin() {
   // Seed settings
   const defaultSettings = [
     { key: 'whatsapp_number', value: '+8801327292323' },
-    { key: 'contact_email', value: 'info@weddingheritagebd.com' },
+    { key: 'contact_email', value: 'info@biyebuzz.com' },
     { key: 'contact_phone', value: '01327292323' },
     { key: 'contact_address', value: 'Elephant Road, Dhaka, 1205' },
     { key: 'facebook_url', value: 'https://www.facebook.com/share/1BoURB3KeF/?mibextid=wwXIfr' },
@@ -99,7 +99,7 @@ async function seedAdmin() {
     await HeroSlide.create([
       {
         title: "Turning Your Forever Moments into Timeless Memories",
-        subtitle: "At Wedding Heritage, we bring your wedding story to life with stunning imagery and heartfelt storytelling.",
+        subtitle: "At BiyeBuzz.com, we bring your wedding story to life with stunning imagery and heartfelt storytelling.",
         image: "https://weddingheritagebd.com/wp-content/uploads/2026/02/01_1-scaled.jpg",
         order: 1,
       },
@@ -126,8 +126,8 @@ async function seedAdmin() {
       {
         section: 'story',
         data: {
-          title: "Welcome To Wedding Heritage",
-          body: "At Wedding Heritage, we believe that every love story is unique and deserves to be celebrated in its truest form. From intimate moments to grand celebrations, we are dedicated to capturing the joy, laughter, and love that make your wedding day unforgettable.\n\nFounded by passionate storytellers, our mission is to preserve your memories with artistry, elegance, and attention to detail. Each photograph and video we create is a testament to the emotions and stories that unfold on your special day.",
+          title: "Welcome To BiyeBuzz.com",
+          body: "At BiyeBuzz.com, we believe that every love story is unique and deserves to be celebrated in its truest form. From intimate moments to grand celebrations, we are dedicated to capturing the joy, laughter, and love that make your wedding day unforgettable.\n\nFounded by passionate storytellers, our mission is to preserve your memories with artistry, elegance, and attention to detail. Each photograph and video we create is a testament to the emotions and stories that unfold on your special day.",
           image: "https://weddingheritagebd.com/wp-content/uploads/2026/02/DSC03273-scaled.jpg",
           order: 1,
         }
@@ -259,7 +259,7 @@ async function seedAdmin() {
         authorName: "Anika & Fahim",
         role: "Bride & Groom",
         rating: 5,
-        body: "Wedding Heritage turned our wedding into a fairy tale. The photos and cinematographic reels captured the raw emotions perfectly. We highly recommend them!",
+        body: "BiyeBuzz.com turned our wedding into a fairy tale. The photos and cinematographic reels captured the raw emotions perfectly. We highly recommend them!",
         isApproved: true,
       },
       {
@@ -281,7 +281,7 @@ async function seedAdmin() {
       data: {
         heroText: "Turning Your Forever Moments into Timeless Memories",
         bannerImage: "https://weddingheritagebd.com/wp-content/uploads/2026/02/01_1-scaled.jpg",
-        introText: "At Wedding Heritage, we bring your wedding story to life with stunning imagery and heartfelt storytelling."
+        introText: "At BiyeBuzz.com, we bring your wedding story to life with stunning imagery and heartfelt storytelling."
       }
     });
     console.log('[seed] Seeded default Home Content.');
@@ -293,7 +293,7 @@ async function seedAdmin() {
     await Content.create({
       section: 'about',
       data: {
-        bio: "At Wedding Heritage, we believe that every love story is unique and deserves to be celebrated in its truest form. Founded by passionate storytellers, our mission is to preserve your memories with artistry, elegance, and attention to detail.",
+        bio: "At BiyeBuzz.com, we believe that every love story is unique and deserves to be celebrated in its truest form. Founded by passionate storytellers, our mission is to preserve your memories with artistry, elegance, and attention to detail.",
         mission: "Capturing love the way it feels, preserved with artistry and elegance.",
         team: ["Irfan (Lead Photographer)", "Milon (Lead Cinematographer)", "Zara (Visual Artist)"]
       }

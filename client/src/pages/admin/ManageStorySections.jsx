@@ -112,7 +112,7 @@ export default function ManageStorySections() {
           )}
           <div>
             <label className="label">Section Title</label>
-            <input className="input-field" placeholder="e.g. Welcome To Wedding Heritage" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} required />
+            <input className="input-field" placeholder="e.g. Welcome To BiyeBuzz.com" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} required />
           </div>
           <div>
             <label className="label">Section Body Text</label>

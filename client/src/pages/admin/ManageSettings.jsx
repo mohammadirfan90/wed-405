@@ -89,7 +89,7 @@ export default function ManageSettings() {
               className="input-field"
               value={settings.contact_email}
               onChange={(e) => set('contact_email', e.target.value)}
-              placeholder="info@weddingheritagebd.com"
+              placeholder="info@biyebuzz.com"
             />
           </div>
 

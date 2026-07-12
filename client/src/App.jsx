@@ -1,6 +1,7 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { Agentation } from 'agentation';
 import Home from './pages/Home.jsx';
+import TrackBooking from './pages/TrackBooking.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
 
 import AdminHome from './pages/admin/AdminHome.jsx';
@@ -21,6 +22,7 @@ export default function App() {
     <>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/track-booking" element={<TrackBooking />} />
         <Route path="/admin/login" element={<AdminLogin />} />
 
         {/* Admin console */}

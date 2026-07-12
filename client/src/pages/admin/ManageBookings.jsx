@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import api from '../../lib/api';
 import DashboardShell from '../../components/DashboardShell.jsx';
+import Modal from '../../components/Modal.jsx';
 
 const STATUS = ['pending', 'approved', 'declined', 'completed', 'cancelled'];
 
@@ -8,6 +9,10 @@ export default function ManageBookings() {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState('');
+  
+  // Google Drive delivery modal states
+  const [completionBooking, setCompletionBooking] = useState(null);
+  const [driveLinkInput, setDriveLinkInput] = useState('');
 
   const load = () => {
     setLoading(true);
@@ -15,13 +20,29 @@ export default function ManageBookings() {
       .then(({ data }) => setBookings(data))
       .finally(() => setLoading(false));
   };
+
   useEffect(() => {
     load();
   }, [filter]);
 
-  async function update(id, status) {
-    await api.patch(`/bookings/${id}`, { status });
+  async function update(id, status, googleDriveLink) {
+    const payload = { status };
+    if (googleDriveLink !== undefined) payload.googleDriveLink = googleDriveLink;
+    await api.patch(`/bookings/${id}`, payload);
     load();
+    setCompletionBooking(null);
+  }
+
+  function handleOpenDeliveryModal(booking) {
+    setCompletionBooking(booking);
+    setDriveLinkInput(booking.googleDriveLink || '');
+  }
+
+  function handleSaveDelivery(e) {
+    e.preventDefault();
+    if (!completionBooking) return;
+    // Mark as completed (or update link) and save the link
+    update(completionBooking._id, completionBooking.status === 'completed' ? 'completed' : 'completed', driveLinkInput);
   }
 
   return (
@@ -61,11 +82,21 @@ export default function ManageBookings() {
                     {b.user?.phone || b.contactPhone || ''}
                     {(!b.user && b.contactEmail) && ` · ${b.contactEmail}`}
                   </div>
+                  <div className="text-[11px] text-[#D4AF37] font-mono font-bold uppercase mt-0.5">
+                    ID: {b.bookingId || '—'}
+                  </div>
                 </td>
                 <td className="px-4 py-3 text-charcoal">{b.package?.title || '—'}</td>
                 <td className="px-4 py-3 text-charcoal/70">{new Date(b.eventDate).toLocaleDateString()}</td>
                 <td className="px-4 py-3 text-charcoal/70">{b.venue}</td>
-                <td className="px-4 py-3 capitalize text-charcoal/70">{b.status}</td>
+                <td className="px-4 py-3 capitalize text-charcoal/70">
+                  <span className="font-semibold">{b.status}</span>
+                  {b.googleDriveLink && (
+                    <div className="text-[10px] text-blue-600 truncate max-w-[150px]" title={b.googleDriveLink}>
+                      🔗 Drive set
+                    </div>
+                  )}
+                </td>
                 <td className="px-4 py-3 text-right">
                   {b.status === 'pending' && (
                     <div className="flex justify-end gap-2">
@@ -74,7 +105,19 @@ export default function ManageBookings() {
                     </div>
                   )}
                   {b.status === 'approved' && (
-                    <button onClick={() => update(b._id, 'completed')} className="rounded-md bg-blue-600 px-2 py-1 text-xs font-semibold text-white hover:bg-blue-700">Mark complete</button>
+                    <button onClick={() => handleOpenDeliveryModal(b)} className="rounded-md bg-blue-600 px-2 py-1 text-xs font-semibold text-white hover:bg-blue-700">Mark complete</button>
+                  )}
+                  {b.status === 'completed' && (
+                    <div className="flex justify-end gap-2 items-center">
+                      {b.googleDriveLink && (
+                        <a href={b.googleDriveLink} target="_blank" rel="noreferrer" className="rounded-md bg-blue-50 border border-blue-200 px-2 py-1 text-xs font-semibold text-blue-600 hover:bg-blue-100" title="Go to Drive Link">
+                          View Drive
+                        </a>
+                      )}
+                      <button onClick={() => handleOpenDeliveryModal(b)} className="rounded-md bg-gray-500 px-2 py-1 text-xs font-semibold text-white hover:bg-gray-600">
+                        Edit Link
+                      </button>
+                    </div>
                   )}
                 </td>
               </tr>
@@ -85,6 +128,45 @@ export default function ManageBookings() {
           </tbody>
         </table>
       </div>
+
+      {/* Google Drive Delivery Modal */}
+      <Modal
+        open={!!completionBooking}
+        onClose={() => setCompletionBooking(null)}
+        title={completionBooking?.status === 'completed' ? "Edit Delivery Link" : "Deliver Photos & Videos"}
+      >
+        <form onSubmit={handleSaveDelivery} className="space-y-4">
+          <p className="text-sm text-charcoal/70">
+            Please provide the Google Drive link containing the photos and videos for booking <strong>{completionBooking?.bookingId}</strong>.
+          </p>
+          <div>
+            <label className="block text-xs font-bold uppercase text-charcoal/60 mb-1">Google Drive Link</label>
+            <input
+              type="url"
+              required
+              placeholder="https://drive.google.com/drive/folders/..."
+              value={driveLinkInput}
+              onChange={(e) => setDriveLinkInput(e.target.value)}
+              className="w-full rounded-lg border border-taupe/30 px-3 py-2 text-sm text-charcoal outline-none focus:border-gold"
+            />
+          </div>
+          <div className="flex justify-end gap-2 pt-2">
+            <button
+              type="button"
+              onClick={() => setCompletionBooking(null)}
+              className="rounded-md border border-taupe/30 px-3 py-1.5 text-xs font-semibold text-charcoal/70 hover:bg-lav-50"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              className="rounded-md bg-charcoal text-gold px-4 py-1.5 text-xs font-bold hover:opacity-90"
+            >
+              {completionBooking?.status === 'completed' ? "Update Link" : "Submit & Mark Complete"}
+            </button>
+          </div>
+        </form>
+      </Modal>
     </DashboardShell>
   );
 }

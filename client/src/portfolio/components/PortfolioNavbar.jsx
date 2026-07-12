@@ -11,6 +11,7 @@ const links = [
   { to: '/portfolio/services', label: 'Services' },
   { to: '/portfolio/gallery', label: 'Portfolio' },
   { to: '/portfolio/packages', label: 'Packages' },
+  { to: '/track-booking', label: 'Delivery' },
 ];
 
 export default function PortfolioNavbar() {

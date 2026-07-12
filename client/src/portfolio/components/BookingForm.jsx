@@ -119,7 +119,7 @@ export default function BookingForm({ onSuccess, embedded = false, compact = fal
 I would like to confirm my booking request.
 
 *Booking details:*
-• Reference: ${success._id}
+• Reference: ${success.bookingId || success._id}
 • Package: ${pkg.title || 'Selected package'}
 • Date: ${date}
 • Venue: ${success.venue}
@@ -165,7 +165,7 @@ Please share the advance payment details. Thank you!`;
           <div className="w-10 h-10 grid place-items-center bg-sepia text-paper">✓</div>
           <div>
             <p className="pf-eyebrow">Booking Confirmed</p>
-            <h3 className="pf-display text-2xl">Reference {success._id?.slice(-6).toUpperCase()}</h3>
+            <h3 className="pf-display text-2xl font-bold font-mono">Reference {success.bookingId || success._id?.slice(-6).toUpperCase()}</h3>
           </div>
         </div>
 
